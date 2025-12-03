@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Component</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="../styles/header.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="홍천 여유채" />
+  <meta property="og:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
+🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
+바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
+⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
+🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
+  <meta property="og:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-3khlfdixljj.jpg" />
+  <meta property="og:url" content="https://yeoyoochae.kr" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="홍천 여유채" />
+  <meta name="twitter:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
+🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
+바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
+⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
+🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
+  <meta name="twitter:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-3khlfdixljj.jpg" />
+</head>
+<body>
+    <header id="main-header" class="fixed top-0 left-0 right-0 w-full bg-transparent border-0 z-40 transition-all duration-300">
+        <div class="flex items-center justify-between p-6 md:p-8">
+            <!-- Brand Logo -->
+            <div class="brand-logo">
+                <button id="pension-logo" class="hover:opacity-80 transition-opacity flex items-center gap-3">
+                    <div>
+                        <div class="logo-text hero-logo-text text-white text-xl md:text-2xl lg:text-3xl ko-title" data-property-name></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Menu Button -->
+            <button id="hamburger-menu" 
+                    class="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
+                    aria-label="메뉴">
+                <div class="w-6 h-6 flex flex-col justify-center items-center space-y-1">
+                    <div id="line1" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                    <div id="line2" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                    <div id="line3" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <div id="fullscreen-menu-container"></div>
+</body>
+</html>
