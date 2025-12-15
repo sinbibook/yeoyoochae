@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.1.0",
-    "generatedAt": "2025-12-03T07:16:58.591Z",
+    "version": "1.2.0",
+    "generatedAt": "2025-12-15T06:37:15.008Z",
     "templateType": "full_banner_slider",
     "propertyId": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "homepageId": "75621ba7-d9dc-4809-be82-1e159b8cb783"
@@ -12,8 +12,8 @@
     "description": "자연 속 한 채, 당신을 위한 진짜 여유 [여유채]\n🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡\n바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.\n⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.\n🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!",
     "subtitle": "당신만을 위한 특별한 공간, 여유채",
     "address": "강원특별자치도 홍천군 서면 팔봉강변길 204",
-    "latitude": 0,
-    "longitude": 0,
+    "latitude": 37.6956247273946,
+    "longitude": 127.710679847819,
     "contactPhone": "010-8924-7793",
     "contactEmail": "555@naver.com",
     "checkin": "15:00:00",
@@ -419,6 +419,7 @@
         "테라스",
         "거실분리형"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -638,6 +639,7 @@
         "테라스",
         "침실분리형"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -878,6 +880,7 @@
         "테라스",
         "침실분리형"
       ],
+      "status": "active",
       "images": [
         {
           "thumbnail": [
@@ -1195,6 +1198,13 @@
                     "id": "07608f9c-6476-4321-a616-9ce9bf877da1",
                     "url": "https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/homepage/75621ba7-d9dc-4809-be82-1e159b8cb783/directions_hero/1764638918892-74t4h9ssqwi.jpg",
                     "sortOrder": 0,
+                    "description": "",
+                    "isSelected": true
+                  },
+                  {
+                    "id": "e471378b-9e61-4fff-9fad-5cf16e4cf39b",
+                    "url": "https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/homepage/75621ba7-d9dc-4809-be82-1e159b8cb783/directions_hero/1765780621564-b4vzlagr5vt.jpg",
+                    "sortOrder": 1,
                     "description": "",
                     "isSelected": true
                   }
