@@ -128,6 +128,27 @@ class ReservationMapper extends BaseDataMapper {
     }
 
     /**
+     * 예약안내 매핑 (property.reservationGuide 사용)
+     */
+    mapReservationGuide() {
+        const reservationGuide = this.safeGet(this.data, 'property.reservationGuide');
+        const reservationElement = this.safeSelect('[data-property-reservationGuide]');
+
+        if (reservationElement) {
+            if (reservationGuide && reservationGuide.trim()) {
+                // Description을 줄바꿈으로 나누어 <p> 태그로 감싸기
+                const lines = reservationGuide.split('\n').filter(line => line.trim());
+                const htmlContent = lines.map(line => `<p class="ko-body">${line.trim()}</p>`).join('');
+                reservationElement.innerHTML = htmlContent;
+            } else {
+                reservationElement.innerHTML = `
+                    <p class="ko-body">예약 안내사항을 입력해주세요</p>
+                `;
+            }
+        }
+    }
+
+    /**
      * Property address 매핑
      */
     mapPropertyAddress() {
@@ -403,6 +424,7 @@ class ReservationMapper extends BaseDataMapper {
         this.mapHeroImages();
         this.mapAboutImages();
         this.mapUsageGuide();
+        this.mapReservationGuide();
         this.mapCheckInOutInfo();
         this.mapRefundPolicy();
         this.mapCancelFeeInfo();
