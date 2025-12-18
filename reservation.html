@@ -99,6 +99,24 @@
                     </div>
                 </div>
 
+                <!-- 예약안내 Accordion -->
+                <div class="border-b mb-4 fade-in-up" style="border-color: rgb(96, 83, 71);">
+                    <button class="accordion-btn w-full py-6 flex items-center justify-between text-left focus:outline-none group" onclick="toggleAccordion(this)">
+                        <h3 class="text-lg md:text-2xl ko-title" style="color: rgb(96, 83, 71);">예약안내</h3>
+                        <svg class="w-6 h-6 transition-transform duration-200 accordion-icon" style="color: rgb(96, 83, 71);"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                    <div class="accordion-content mb-2 overflow-hidden transition-all duration-300 max-h-0">
+                        <div class="bg-stone-50 rounded-lg p-6 border mb-4" style="border-color: rgb(96, 83, 71);">
+                            <div class="reservationGuide ko-title space-y-2" data-property-reservationGuide>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 입/퇴실 안내 Accordion -->
                 <div class="border-b mb-4 fade-in-up" style="border-color: rgb(96, 83, 71);">
                     <button class="accordion-btn w-full py-6 flex items-center justify-between text-left focus:outline-none group" onclick="toggleAccordion(this)">
