@@ -35,6 +35,7 @@ body footer {
     width: 100%;
     z-index: 10;
     position: relative;
+    font-family: var(--font-ko-sub);
 }
 
 /* 소셜 링크 기본 스타일 - 모든 footer 내 소셜 링크에 적용 */
@@ -73,6 +74,7 @@ footer a[data-homepage-socialLinks-youtube] {
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
     font-weight: 600;
+    font-family: var(--font-ko-sub);
 }
 
 .footer-section p {
@@ -80,6 +82,7 @@ footer a[data-homepage-socialLinks-youtube] {
     line-height: 1.6;
     color: #e2e8f0;
     font-size: 1rem;
+    font-family: var(--font-ko-sub);
 }
 
 .footer-section div {
@@ -87,6 +90,12 @@ footer a[data-homepage-socialLinks-youtube] {
     line-height: 1.6;
     color: #e2e8f0;
     font-size: 1rem;
+    font-family: var(--font-ko-sub);
+}
+
+/* Footer 내부 space-y-3 안의 p 태그 스타일 */
+.space-y-3 p {
+    font-family: var(--font-ko-sub);
 }
 
 .social-links {
@@ -130,6 +139,7 @@ footer a[data-homepage-socialLinks-youtube] {
     margin: 0;
     color: #a0aec0;
     font-size: 0.9rem;
+    font-family: var(--font-ko-sub);
 }
 
 /* Responsive Design */
