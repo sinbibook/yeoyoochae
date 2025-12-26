@@ -550,7 +550,7 @@
     margin-right: 12px;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-ko-sub);
 }
 
 .arrow-head {
