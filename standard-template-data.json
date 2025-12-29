@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.4.0",
-    "generatedAt": "2025-12-26T02:50:38.293Z",
+    "version": "1.5.0",
+    "generatedAt": "2025-12-29T02:32:36.613Z",
     "templateType": "full_banner_slider",
     "propertyId": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "homepageId": "75621ba7-d9dc-4809-be82-1e159b8cb783"
@@ -386,7 +386,7 @@
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스\n\n",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
       "group": null,
-      "size": 1,
+      "size": 69,
       "baseOccupancy": 2,
       "maxOccupancy": 4,
       "totalRoomCount": {
@@ -606,7 +606,7 @@
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
       "group": null,
-      "size": 1,
+      "size": 62,
       "baseOccupancy": 2,
       "maxOccupancy": 4,
       "totalRoomCount": {
@@ -847,7 +847,7 @@
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
       "group": null,
-      "size": 1,
+      "size": 62,
       "baseOccupancy": 2,
       "maxOccupancy": 4,
       "totalRoomCount": {
