@@ -168,8 +168,7 @@ async function initRealtimeReservationButton() {
 async function handleGpensionReservation() {
     const realtimeBookingId = await getPropertyData('realtimeBookingId');
     if (realtimeBookingId) {
-        const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
-        window.open(reservationUrl, '_blank');
+        window.open(realtimeBookingId, '_blank');
     }
     // Note: Button is hidden during initialization if realtimeBookingId doesn't exist
 }

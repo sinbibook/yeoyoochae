@@ -343,8 +343,7 @@ class HeaderFooterMapper extends BaseDataMapper {
         const bookingButton = document.querySelector('[data-property-gpension-id]');
         if (bookingButton && this.data?.property?.realtimeBookingId) {
             bookingButton.addEventListener('click', () => {
-                const realtimeBookingId = this.data.property.realtimeBookingId;
-                const bookingUrl = `https://www.bookingplay.co.kr/booking/1/${realtimeBookingId}`;
+                const bookingUrl = this.data.property.realtimeBookingId;
                 window.open(bookingUrl, '_blank');
             });
         }

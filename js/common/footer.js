@@ -97,8 +97,7 @@ class FooterComponent {
         }
 
         if (this.realtimeBookingId) {
-            const reservationUrl = `https://www.bookingplay.co.kr/booking/1/${this.realtimeBookingId}`;
-            window.open(reservationUrl, '_blank');
+            window.open(this.realtimeBookingId, '_blank');
         } else {
             this.handleReservation();
         }
