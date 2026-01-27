@@ -44,6 +44,21 @@ class BaseDataMapper {
     }
 
     /**
+     * 빈 값 체크 헬퍼 (private)
+     */
+    _isEmptyValue(value) {
+        return value === undefined || value === null || (typeof value === 'string' && value.trim() === '');
+    }
+
+    /**
+     * 텍스트 정제 헬퍼 (customFields 우선, fallback 지원)
+     */
+    sanitizeText(text, fallback = '') {
+        if (this._isEmptyValue(text)) return fallback;
+        return text.trim();
+    }
+
+    /**
      * DOM 요소 안전 선택
      */
     safeSelect(selector) {
@@ -110,6 +125,122 @@ class BaseDataMapper {
             'SPA': '힐링과 휴식을 위한 스파 시설'
         };
         return descriptions[code] || '';
+    }
+
+    /**
+     * 선택된 이미지만 필터링하고 정렬하는 공통 헬퍼 메서드
+     * @param {Array} images - 이미지 배열
+     * @param {string} [category] - 필터링할 카테고리 (선택적)
+     * @returns {Array} 선택되고 정렬된 이미지 배열
+     * @private
+     */
+    _getSelectedAndSortedImages(images, category = null) {
+        if (!Array.isArray(images)) return [];
+        return images
+            .filter(img => img.isSelected && (category === null || img.category === category))
+            .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+    }
+
+    /**
+     * HTML 특수 문자를 이스케이프 처리하는 헬퍼 메서드 (XSS 방지)
+     * @private
+     */
+    _escapeHTML(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            '/': '&#x2F;'
+        };
+        return text.replace(/[&<>"'\/]/g, (char) => map[char]);
+    }
+
+    /**
+     * 텍스트의 줄바꿈을 HTML <br> 태그로 변환하는 헬퍼 메서드 (XSS 안전)
+     * @private
+     */
+    _formatTextWithLineBreaks(text) {
+        if (this._isEmptyValue(text)) return '';
+        const trimmedText = text.trim();
+        const escapedText = this._escapeHTML(trimmedText);
+        return escapedText.replace(/\n/g, '<br>');
+    }
+
+    // ============================================================================
+    // 🏠 CUSTOMFIELDS HELPERS (Property & Room)
+    // ============================================================================
+
+    /**
+     * 숙소 이름 가져오기 (customFields 우선, 없으면 기본값)
+     * @returns {string} 숙소 이름
+     */
+    getPropertyName() {
+        const customName = this.safeGet(this.data, 'homepage.customFields.property.name');
+        return this.sanitizeText(customName, this.safeGet(this.data, 'property.name') || '숙소명');
+    }
+
+    /**
+     * 숙소 영문명 가져오기 (customFields 우선, 없으면 기본값)
+     * @returns {string} 숙소 영문명
+     */
+    getPropertyNameEn() {
+        const customNameEn = this.safeGet(this.data, 'homepage.customFields.property.nameEn');
+        return this.sanitizeText(customNameEn, this.safeGet(this.data, 'property.nameEn') || 'PROPERTY NAME');
+    }
+
+    /**
+     * 숙소 이미지 가져오기 (customFields의 카테고리별 이미지)
+     * @param {string} imageCategory - 이미지 카테고리 (property_exterior, property_interior, property_thumbnail 등)
+     * @returns {Array} 정렬된 이미지 배열
+     */
+    getPropertyImages(imageCategory) {
+        const customImages = this.safeGet(this.data, 'homepage.customFields.property.images') || [];
+        return this._getSelectedAndSortedImages(customImages, imageCategory);
+    }
+
+    /**
+     * 객실 customFields 가져오기
+     * @param {string} roomId - 객실 ID
+     * @returns {Object|null} 객실 customFields 데이터
+     */
+    getRoomTypeCustomFields(roomId) {
+        const roomtypes = this.safeGet(this.data, 'homepage.customFields.roomtypes') || [];
+        return roomtypes.find(rt => rt.id === roomId) || null;
+    }
+
+    /**
+     * 객실 이름 가져오기 (customFields 우선, 없으면 기본값)
+     * @param {Object} room - 객실 데이터
+     * @returns {string} 객실 이름
+     */
+    getRoomName(room) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        return this.sanitizeText(customFields?.name, room.name || '객실명');
+    }
+
+    /**
+     * 객실 영문명 가져오기 (customFields 우선, 없으면 기본값)
+     * @param {Object} room - 객실 데이터
+     * @returns {string} 객실 영문명
+     */
+    getRoomNameEn(room) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        return this.sanitizeText(customFields?.nameEn, room.nameEn || 'ROOM NAME');
+    }
+
+    /**
+     * 객실 이미지 가져오기 (customFields의 카테고리별 이미지)
+     * @param {Object} room - 객실 데이터
+     * @param {string} imageCategory - 이미지 카테고리 (roomtype_interior, roomtype_exterior, roomtype_thumbnail)
+     * @returns {Array} 정렬된 이미지 배열
+     */
+    getRoomImages(room, imageCategory) {
+        const customFields = this.getRoomTypeCustomFields(room.id);
+        const customImages = customFields?.images || [];
+        return this._getSelectedAndSortedImages(customImages, imageCategory);
     }
 
     // ============================================================================
@@ -195,10 +326,13 @@ class BaseDataMapper {
     updateMetaTags(property) {
         if (!property) return;
 
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
+
         // 타이틀 업데이트
         const title = this.safeSelect('title');
         if (title && property.subtitle) {
-            title.textContent = `${property.name} - ${property.subtitle}`;
+            title.textContent = `${builderPropertyName} - ${property.subtitle}`;
         }
 
         // 메타 description 업데이트
@@ -213,7 +347,7 @@ class BaseDataMapper {
             const keywords = [
                 property.city.name + '펜션',
                 property.province.name + '숙박',
-                property.name,
+                builderPropertyName,
                 '감성펜션',
                 '자연휴양지'
             ].join(', ');

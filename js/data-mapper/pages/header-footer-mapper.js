@@ -18,19 +18,20 @@ class HeaderFooterMapper extends BaseDataMapper {
     mapHeaderLogo() {
         if (!this.isDataLoaded || !this.data.property) return;
 
-        const property = this.data.property;
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
 
         // Header 로고 텍스트 매핑 (.logo-text)
         const logoText = this.safeSelect('.logo-text');
-        if (logoText && property.name) {
-            logoText.textContent = property.name;
+        if (logoText) {
+            logoText.textContent = builderPropertyName;
         }
 
         // Property name 매핑 (data-property-name 속성)
         const propertyNameElements = this.safeSelectAll('[data-property-name]');
         propertyNameElements.forEach(element => {
-            if (element && property.name) {
-                element.textContent = property.name;
+            if (element) {
+                element.textContent = builderPropertyName;
             }
         });
     }
@@ -90,10 +91,13 @@ class HeaderFooterMapper extends BaseDataMapper {
 
             if (roomData && Array.isArray(roomData) && roomData.length > 0) {
                 roomData.forEach((room, index) => {
+                    // customFields 헬퍼를 통해 객실명 가져오기
+                    const roomName = this.getRoomName(room);
+
                     const li = document.createElement('li');
                     const a = document.createElement('a');
-                    a.href = `room.html?index=${index}`;
-                    a.textContent = room.name || `객실${index + 1}`;
+                    a.href = `room.html?id=${room.id}`;
+                    a.textContent = roomName;
                     li.appendChild(a);
                     submenu.appendChild(li);
                 });
@@ -107,12 +111,15 @@ class HeaderFooterMapper extends BaseDataMapper {
 
             if (roomData && Array.isArray(roomData) && roomData.length > 0) {
                 roomData.forEach((room, index) => {
+                    // customFields 헬퍼를 통해 객실명 가져오기
+                    const roomName = this.getRoomName(room);
+
                     const button = document.createElement('button');
                     button.className = 'mobile-sub-item';
                     button.type = 'button';
-                    button.textContent = room.name || `객실${index + 1}`;
+                    button.textContent = roomName;
                     button.addEventListener('click', () => {
-                        window.location.href = `room.html?index=${index}`;
+                        window.location.href = `room.html?id=${room.id}`;
                     });
                     mobileSpacesContainer.appendChild(button);
                 });
@@ -220,9 +227,9 @@ class HeaderFooterMapper extends BaseDataMapper {
         // 저작권 정보 매핑 (data-footer-copyright)
         const copyrightElements = this.safeSelectAll('[data-footer-copyright]');
         copyrightElements.forEach(copyrightEl => {
-            if (copyrightEl && property.name) {
+            if (copyrightEl) {
                 const currentYear = new Date().getFullYear();
-                copyrightEl.textContent = `© ${currentYear} ${property.name}. All rights reserved.`;
+                copyrightEl.innerHTML = `<a href="https://www.sinbibook.com/" target="_blank" rel="noopener">© ${currentYear} 신비서. All rights reserved.</a>`;
             }
         });
 
@@ -267,13 +274,22 @@ class HeaderFooterMapper extends BaseDataMapper {
 
     /**
      * Fullscreen 메뉴 데이터 업데이트 (window.FullScreenMenu에 데이터 전달)
+     * 재시도 로직 포함 - fullscreen-menu.js 비동기 로딩 대응
      */
-    mapFullscreenMenu() {
+    mapFullscreenMenu(retryCount = 0) {
         if (!this.isDataLoaded) return;
+
+        const MAX_RETRIES = 10;
+        const RETRY_DELAY = 200; // ms
 
         // FullScreenMenu 인스턴스가 있으면 데이터 업데이트
         if (window.fullScreenMenu && typeof window.fullScreenMenu.updateFromMapper === 'function') {
             window.fullScreenMenu.updateFromMapper(this.data);
+        } else if (retryCount < MAX_RETRIES) {
+            // fullscreen-menu.js가 아직 로드되지 않았으면 재시도
+            setTimeout(() => {
+                this.mapFullscreenMenu(retryCount + 1);
+            }, RETRY_DELAY);
         }
     }
 

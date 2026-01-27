@@ -21,10 +21,13 @@ class IndexMapper extends BaseDataMapper {
     mapHeroSection() {
         if (!this.isDataLoaded) return;
 
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
+
         // 1. Property name 매핑 (Hero 섹션의 h1 내부)
         const propertyNameEl = this.safeSelect('#section1 [data-property-name]');
-        if (propertyNameEl && this.data.property && this.data.property.name) {
-            propertyNameEl.textContent = this.data.property.name;
+        if (propertyNameEl && builderPropertyName) {
+            propertyNameEl.textContent = builderPropertyName;
         }
 
         // 2. Hero description 매핑
@@ -251,11 +254,14 @@ class IndexMapper extends BaseDataMapper {
     mapAboutSection() {
         if (!this.isDataLoaded) return;
 
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
+
         // Property name 매핑 (설명 텍스트 내 모든 요소)
         const propertyNameElements = this.safeSelectAll('.about-section [data-property-name]');
         propertyNameElements.forEach(element => {
-            if (this.data.property && this.data.property.name) {
-                element.textContent = this.data.property.name;
+            if (builderPropertyName) {
+                element.textContent = builderPropertyName;
             }
         });
 
@@ -559,13 +565,16 @@ class IndexMapper extends BaseDataMapper {
      * SEO 메타 태그 및 Favicon 업데이트
      */
     updateSEOInfo(property, seoData) {
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
+
         // Property 기반 기본 타이틀 설정
-        if (property && property.name) {
+        if (builderPropertyName) {
             const title = document.querySelector('title');
-            if (title && property.subtitle) {
-                title.textContent = `${property.name} - ${property.subtitle}`;
+            if (title && property?.subtitle) {
+                title.textContent = `${builderPropertyName} - ${property.subtitle}`;
             } else if (title) {
-                title.textContent = property.name;
+                title.textContent = builderPropertyName;
             }
         }
 

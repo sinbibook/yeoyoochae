@@ -142,6 +142,12 @@ footer a[data-homepage-socialLinks-youtube] {
     font-family: var(--font-ko-sub);
 }
 
+.footer-copyright,
+.footer-copyright a {
+    color: white;
+    text-decoration: none;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     footer {

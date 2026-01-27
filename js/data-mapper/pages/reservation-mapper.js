@@ -282,10 +282,11 @@ class ReservationMapper extends BaseDataMapper {
         const businessInfo = this.data.property?.businessInfo;
         if (!businessInfo) return;
 
-        // 펜션명 (로고 텍스트) - 숙소명 우선 사용
+        // 펜션명 (로고 텍스트) - customFields 헬퍼 사용
         const logoText = this.safeSelect('.footer-logo');
-        if (logoText && this.data.property.name) {
-            logoText.textContent = this.data.property.name;
+        const builderPropertyName = this.getPropertyName();
+        if (logoText && builderPropertyName) {
+            logoText.textContent = builderPropertyName;
         }
 
         // 전화번호 매핑
@@ -383,17 +384,12 @@ class ReservationMapper extends BaseDataMapper {
         const waveElement = this.safeSelect('[data-reservation-wave-background]');
         if (!waveElement) return;
 
-        // Property 외경 이미지 첫 번째 사용 (선택된 이미지 필터링 및 정렬)
-        const propertyExteriorImages = this.safeGet(this.data, 'property.images.0.exterior');
+        // customFields 헬퍼를 통해 property_exterior 이미지 가져오기
+        const exteriorImages = this.getPropertyImages('property_exterior');
         let imageUrl = '';
 
-        if (Array.isArray(propertyExteriorImages) && propertyExteriorImages.length > 0) {
-            // 선택된 이미지만 필터링하고 sortOrder 기준으로 정렬해서 첫 번째 사용
-            const firstImage = window.ImageHelpers.getFirstSelectedImage(propertyExteriorImages);
-
-            if (firstImage) {
-                imageUrl = firstImage.url;
-            }
+        if (exteriorImages.length > 0) {
+            imageUrl = exteriorImages[0].url;
         }
 
         if (imageUrl) {
@@ -446,11 +442,13 @@ class ReservationMapper extends BaseDataMapper {
      * 페이지 제목 업데이트
      */
     updatePageTitle() {
-        const property = this.data.property;
         const htmlTitle = this.safeSelect('title');
 
-        if (htmlTitle && property?.name) {
-            htmlTitle.textContent = `예약안내 - ${property.name}`;
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
+
+        if (htmlTitle && builderPropertyName) {
+            htmlTitle.textContent = `예약안내 - ${builderPropertyName}`;
         }
     }
 }
