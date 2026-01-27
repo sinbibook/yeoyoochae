@@ -174,20 +174,13 @@ class MainMapper extends BaseDataMapper {
         const waveBackgroundElement = this.safeSelect('[data-property-exterior-images-0-url]');
 
         if (waveBackgroundElement) {
-            const exteriorImages = this.safeGet(this.data, 'property.images.0.exterior');
+            // customFields 헬퍼를 통해 property_exterior 이미지 가져오기
+            const exteriorImages = this.getPropertyImages('property_exterior');
+            const firstImage = exteriorImages[0] || null;
 
-            if (Array.isArray(exteriorImages) && exteriorImages.length > 0) {
-                // isSelected가 true인 이미지들만 필터링하고 sortOrder로 정렬
-                const firstImage = window.ImageHelpers.getFirstSelectedImage(exteriorImages);
-
-                // 첫 번째 선택된 이미지 사용
-                if (firstImage) {
-                    waveBackgroundElement.style.backgroundImage = `url(${firstImage.url})`;
-                    waveBackgroundElement.classList.remove('empty-image-placeholder');
-                } else {
-                    waveBackgroundElement.style.backgroundImage = '';
-                    waveBackgroundElement.classList.add('empty-image-placeholder');
-                }
+            if (firstImage) {
+                waveBackgroundElement.style.backgroundImage = `url(${firstImage.url})`;
+                waveBackgroundElement.classList.remove('empty-image-placeholder');
             } else {
                 waveBackgroundElement.style.backgroundImage = '';
                 waveBackgroundElement.classList.add('empty-image-placeholder');

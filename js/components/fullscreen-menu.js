@@ -38,7 +38,7 @@ if (!window.menuDataLoaded) {
         about: {
             label: "ABOUT",
             subMenus: [
-                { id: "main", label: "메인" },
+                { id: "main", label: "소개" },
                 { id: "directions", label: "오시는길" }
             ]
         },
@@ -108,13 +108,18 @@ class FullScreenMenu {
 
         const data = this.data;
 
-        // SPACES 메뉴 업데이트 (rooms 데이터)
+        // SPACES 메뉴 업데이트 (rooms 데이터) - customFields 객실명 사용
         if (data.rooms && data.rooms.length > 0) {
-            window.menuData.spaces.subMenus = data.rooms.map(room => ({
-                id: `room-${room.id}`,
-                label: room.name,
-                roomId: room.id
-            }));
+            const builderRoomtypes = data.homepage?.customFields?.roomtypes || [];
+            window.menuData.spaces.subMenus = data.rooms.map(room => {
+                const builderRoom = builderRoomtypes.find(rt => rt.id === room.id);
+                const roomName = (builderRoom?.name && builderRoom.name.trim()) ? builderRoom.name : room.name;
+                return {
+                    id: `room-${room.id}`,
+                    label: roomName,
+                    roomId: room.id
+                };
+            });
         }
 
         // SPECIALS 메뉴 업데이트 (facilities 데이터)
@@ -636,6 +641,25 @@ window.FullScreenMenu = FullScreenMenu;
 // 전역 인스턴스 생성 (중복 방지)
 if (!window.fullScreenMenu) {
     window.fullScreenMenu = new window.FullScreenMenu();
+
+    // 이미 로드된 데이터가 있으면 즉시 적용 (타이밍 이슈 해결)
+    // HeaderFooterMapper가 먼저 실행된 경우를 대비
+    setTimeout(() => {
+        if (!window.fullScreenMenu.isDataLoaded) {
+            // 페이지별 mapper에서 데이터 찾기
+            const mapperData =
+                (window.indexMapper && window.indexMapper.data) ||
+                (window.mainMapper && window.mainMapper.data) ||
+                (window.roomMapper && window.roomMapper.data) ||
+                (window.facilityMapper && window.facilityMapper.data) ||
+                (window.directionsMapper && window.directionsMapper.data) ||
+                (window.reservationMapper && window.reservationMapper.data);
+
+            if (mapperData) {
+                window.fullScreenMenu.updateFromMapper(mapperData);
+            }
+        }
+    }, 100);
 }
 
 // 전역 함수들 (항상 재정의)

@@ -285,16 +285,11 @@ class FacilityMapper extends BaseDataMapper {
             }
         }
 
-        // 시설 이미지가 없으면 property exterior 이미지 fallback (선택된 것 중 첫 번째)
-        if (!imageUrl && this.data.property?.images?.length > 0) {
-            for (const imageGroup of this.data.property.images) {
-                if (imageGroup.exterior && imageGroup.exterior.length > 0) {
-                    const firstExterior = window.ImageHelpers.getFirstSelectedImage(imageGroup.exterior);
-                    if (firstExterior) {
-                        imageUrl = firstExterior.url;
-                        break;
-                    }
-                }
+        // 시설 이미지가 없으면 customFields 헬퍼를 통해 property_exterior 이미지 fallback
+        if (!imageUrl) {
+            const exteriorImages = this.getPropertyImages('property_exterior');
+            if (exteriorImages.length > 0) {
+                imageUrl = exteriorImages[0].url;
             }
         }
 
@@ -636,15 +631,16 @@ class FacilityMapper extends BaseDataMapper {
      * 페이지 제목 업데이트
      */
     updatePageTitle(facility) {
-        const property = this.data.property;
+        // customFields 헬퍼를 통해 숙소명 가져오기
+        const builderPropertyName = this.getPropertyName();
 
         // HTML title 업데이트
-        document.title = `${facility.name} - ${property.name}`;
+        document.title = `${facility.name} - ${builderPropertyName}`;
 
         // page-title 엘리먼트 업데이트
         const pageTitleElement = this.safeSelect('#page-title');
         if (pageTitleElement) {
-            pageTitleElement.textContent = `${facility.name} - ${property.name}`;
+            pageTitleElement.textContent = `${facility.name} - ${builderPropertyName}`;
         }
     }
 
