@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.10.0",
-    "generatedAt": "2026-01-27T06:20:54.456Z",
+    "version": "1.11.0",
+    "generatedAt": "2026-02-05T02:34:57.012Z",
     "templateType": "full_banner_slider",
     "propertyId": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "homepageId": "75621ba7-d9dc-4809-be82-1e159b8cb783"
@@ -43,10 +43,10 @@
       "businessNumber": "558-23-01676",
       "representativeName": "여유채",
       "businessAddress": "강원 홍천군 서면 팔봉강변길 204",
-      "businessPhone": "",
-      "businessEmail": "",
-      "businessType": "",
-      "businessCategory": "",
+      "businessPhone": "010-8924-7793",
+      "businessEmail": "555@naver.com",
+      "businessType": "individual",
+      "businessCategory": "숙박업",
       "eCommerceRegistrationNumber": ""
     },
     "contractInfo": {
@@ -1394,8 +1394,29 @@
             ],
             "slider": false,
             "enabled": true,
-            "endDate": null,
+            "endDate": "2026-02-27",
             "sortOrder": 0,
+            "startDate": "2026-02-05",
+            "description": ""
+          },
+          {
+            "id": "7c7dd45b-ae30-4b5f-a05c-7f8367a0f6c6",
+            "link": "",
+            "title": "",
+            "images": [
+              {
+                "id": "466950d0-e1a4-4bc9-9e1c-c4a25a943496",
+                "url": "https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/homepage/75621ba7-d9dc-4809-be82-1e159b8cb783/popup/1770258891896-t5y938hs5a.png",
+                "sortOrder": 1,
+                "description": "",
+                "isSelected": true,
+                "blockId": "7c7dd45b-ae30-4b5f-a05c-7f8367a0f6c6"
+              }
+            ],
+            "slider": false,
+            "enabled": true,
+            "endDate": null,
+            "sortOrder": 1,
             "startDate": null,
             "description": ""
           }
@@ -2225,6 +2246,7 @@
           ]
         }
       ]
-    }
+    },
+    "id": "75621ba7-d9dc-4809-be82-1e159b8cb783"
   }
 }
