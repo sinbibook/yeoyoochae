@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "version": "1.12.0",
-    "generatedAt": "2026-02-05T02:39:14.399Z",
+    "version": "1.13.0",
+    "generatedAt": "2026-03-27T07:18:23.380Z",
     "templateType": "full_banner_slider",
     "propertyId": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "homepageId": "75621ba7-d9dc-4809-be82-1e159b8cb783"
@@ -39,9 +39,9 @@
       "펜션"
     ],
     "businessInfo": {
-      "businessName": "발급예정",
-      "businessNumber": "558-23-01676",
-      "representativeName": "여유채",
+      "businessName": "여유채",
+      "businessNumber": "464-22-01942",
+      "representativeName": "이승우",
       "businessAddress": "강원 홍천군 서면 팔봉강변길 204",
       "businessPhone": "010-8924-7793",
       "businessEmail": "555@naver.com",
@@ -403,6 +403,7 @@
       "name": "Room 1 (독채,자쿠지)",
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스\n\n",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
+      "usageGuide": "",
       "group": null,
       "size": 69,
       "baseOccupancy": 2,
@@ -623,6 +624,7 @@
       "name": "Room 2 (독채,자쿠지)",
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
+      "usageGuide": "",
       "group": null,
       "size": 62,
       "baseOccupancy": 2,
@@ -864,6 +866,7 @@
       "name": "Room 3 (독채,자쿠지) ",
       "description": "분리형 :  침대룸1+거실1+주방1+화장실+개별테라스",
       "roomInfo": "추가 구비 품목: 침대 (Silly 매트리스) ), 어메니티, 다이슨 드라이기\n\n[인원추가(1박기준/현장결제)]\n- 24개월 이상 1인 당 30,000원 (1박기준/현장결제)\n- 24개월 이하는 무료이나 인원 수 포함\n- 최대인원 초과입실은 불가합니다.",
+      "usageGuide": "",
       "group": null,
       "size": 62,
       "baseOccupancy": 2,
@@ -2254,7 +2257,6 @@
           ]
         }
       ]
-    },
-    "id": "75621ba7-d9dc-4809-be82-1e159b8cb783"
+    }
   }
 }
