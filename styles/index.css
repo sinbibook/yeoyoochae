@@ -6,26 +6,9 @@
     border-radius: 0 !important;
 }
 
-/* About 섹션 첫 번째 이미지 (프리미엄 스파) */
-.about-section .about-content:nth-child(1) img.empty-image-placeholder {
-    border-radius: 40px 0 40px 0 !important;
-}
-
-/* About 섹션 짝수 번째 이미지 - 반대 모서리 (데스크톱용) */
-.about-section .about-content:nth-child(even) img.empty-image-placeholder {
-    border-radius: 0 40px 0 40px !important;
-}
-
-/* 모바일에서는 모든 섹션이 첫 번째와 동일한 border-radius */
-@media (max-width: 768px) {
-    .about-section .about-content:nth-child(even) img.empty-image-placeholder {
-        border-radius: 40px 0 40px 0 !important;
-    }
-}
-
-/* About 섹션 세 번째 이미지 (펫 카페) */
-.about-section .about-content:nth-child(3) img.empty-image-placeholder {
-    border-radius: 40px 0 40px 0 !important;
+/* About 섹션 이미지 - 라운딩 없음 */
+.about-section .about-content img.empty-image-placeholder {
+    border-radius: 0 !important;
 }
 
 .hero-section {
@@ -172,7 +155,7 @@
 .about-section {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 10px 2rem;
 }
 
 .about-content {
@@ -184,7 +167,7 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .about-section {
-        padding: 3rem 0.75rem;
+        padding: 10px 0.75rem;
     }
 
     .about-content {
@@ -234,29 +217,8 @@
         margin: 2rem auto 0 auto !important;
     }
 
-    .about-content:nth-child(1) .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-content:nth-child(1) .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
     .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    /* 모바일에서는 모든 섹션이 동일한 border-radius */
-    .about-image.fade-in-scale.animate img {
-        border-radius: 40px 0 40px 0 !important;
-    }
-
-    .about-image.fade-in-scale.animate::before {
-        border-radius: 40px 0 40px 0 !important;
+        border-radius: 0 !important;
     }
 
     /* placeholder 이미지도 동일하게 */
@@ -268,7 +230,7 @@
 /* Tablet Responsive */
 @media (min-width: 769px) and (max-width: 1024px) {
     .about-section {
-        padding: 3.5rem 2rem;
+        padding: 10px 2rem;
     }
 
     .about-content {
@@ -299,16 +261,7 @@
 }
 
 .about-image::before {
-    content: '';
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 100%;
-    height: 100%;
-    background-color: #d2c9bf;
-    border-radius: 0 0 0 0;
-    z-index: -1;
-    transition: all 1.5s ease-out;
+    display: none;
 }
 
 .about-content:nth-child(even) .about-image::before {
@@ -352,32 +305,25 @@
     width: 100%;
     height: auto;
     border-radius: 0;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     position: relative;
     z-index: 1;
     opacity: 0;
     transform: translateY(20px);
-    transition: border-radius 1.5s ease-out, opacity 1.5s ease-out, transform 1.5s ease-out;
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 
-/* 홀수 번째 아이템 - 왼쪽 위, 오른쪽 아래 둥글게 */
+/* 홀수/짝수 아이템 - 라운딩 없음 */
 .about-content:nth-child(odd) .about-image.fade-in-scale.animate img {
-    border-radius: 45px 0 45px 0;
+    border-radius: 0;
     opacity: 1;
     transform: translateY(0);
 }
 
-/* 짝수 번째 아이템 - 오른쪽 위, 왼쪽 아래 둥글게 */
 .about-content:nth-child(even) .about-image.fade-in-scale.animate img {
-    border-radius: 0 45px 0 45px;
+    border-radius: 0;
     opacity: 1;
     transform: translateY(0);
-}
-
-.about-image img:hover {
-    transform: scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Hero Text Sequential Animations */
@@ -413,13 +359,8 @@
     transform: translateY(0);
 }
 
-/* Hero Image Zoom Effect */
+/* Hero Image - No Zoom */
 .hero-swiper .swiper-slide img {
-    transform: scale(1.1);
-    transition: transform 8s ease-out;
-}
-
-.hero-swiper .swiper-slide-active img {
     transform: scale(1);
 }
 

@@ -293,7 +293,7 @@ img:not([src]) {
 
 @media (max-width: 768px) {
     .wave-bg {
-        height: 550px; /* Increased from 450px */
+        height: 50vh;
     }
 
     .wave-bg-section {
