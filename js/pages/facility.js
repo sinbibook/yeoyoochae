@@ -1,621 +1,326 @@
-/**
- * Facility Page Functionality
- * 시설 페이지 기능 (헤더/푸터 로딩 포함)
- */
+// Main Hero Slideshow
+function initMainSlideshow() {
+    var slides = document.querySelectorAll('.main-slide');
+    if (!slides.length) return;
 
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Load data mapper for content mapping
-    setTimeout(() => {
-        loadDataMapper();
-    }, 100);
-});
+    var bg = document.querySelector('.main-bg');
+    var progress = document.querySelector('.title-divider .bar-progress');
+    var arrowNums = document.querySelectorAll('.main-arrow .arrow-number');
+    var arrowLeft = document.querySelector('.main-arrow .arrow-left');
+    var arrowRight = document.querySelector('.main-arrow .arrow-right');
+    var current = 0;
+    var total = slides.length;
 
-/**
- * Data mapper loader and initializer
- */
-async function loadDataMapper() {
-    // iframe 환경(어드민 미리보기)에서는 PreviewHandler가 초기화 담당
-    if (window.APP_CONFIG && window.APP_CONFIG.isInIframe()) {
-        return;
+    function padNum(n) {
+        return n < 10 ? '0' + n : '' + n;
     }
 
-    try {
-        const dataPath = window.APP_CONFIG
-            ? window.APP_CONFIG.getResourcePath('standard-template-data.json')
-            : './standard-template-data.json';
-        const response = await fetch(dataPath);
-        const data = await response.json();
-
-        window.dogFriendlyDataMapper = {
-            data: data,
-            isDataLoaded: true
-        };
-
-        if (window.FacilityMapper) {
-            const mapper = new FacilityMapper(data);
-            mapper.mapPage();
-        } else {
-            setTimeout(() => {
-                if (window.FacilityMapper) {
-                    const mapper = new FacilityMapper(data);
-                    mapper.mapPage();
-                }
-            }, 1000);
+    function updateNumbers() {
+        if (arrowNums.length >= 2) {
+            arrowNums[0].textContent = padNum(current + 1);
+            arrowNums[1].textContent = padNum(total);
         }
+    }
 
-        setTimeout(() => {
-            if (window.HeaderFooterMapper) {
-                const headerFooterMapper = new HeaderFooterMapper();
-                headerFooterMapper.data = data;
-                headerFooterMapper.isDataLoaded = true;
-                headerFooterMapper.mapHeaderFooter();
-            }
-        }, 1500);
-    } catch (error) {
+    function isMobileScroll() {
+        return bg && bg.scrollWidth > bg.clientWidth;
+    }
+
+    function goTo(index) {
+        slides[current].classList.remove('active');
+        current = (index + total) % total;
+        slides[current].classList.add('active');
+        updateNumbers();
+        if (isMobileScroll()) {
+            bg.scrollTo({ left: current * bg.offsetWidth, behavior: 'smooth' });
+        }
+    }
+
+    function restartProgress() {
+        if (!progress) return;
+        progress.style.animation = 'none';
+        progress.offsetHeight;
+        progress.style.animation = '';
+    }
+
+    updateNumbers();
+
+    slides[0].classList.add('active');
+
+    if (progress) {
+        progress.addEventListener('animationiteration', function() {
+            goTo(current + 1);
+        });
+    }
+
+    if (bg) {
+        var scrollTimer;
+        bg.addEventListener('scroll', function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(function() {
+                var snapped = Math.round(bg.scrollLeft / bg.offsetWidth);
+                if (snapped !== current && snapped >= 0 && snapped < total) {
+                    slides[current].classList.remove('active');
+                    current = snapped;
+                    slides[current].classList.add('active');
+                    updateNumbers();
+                    restartProgress();
+                }
+            }, 150);
+        });
+    }
+
+    if (arrowLeft) {
+        arrowLeft.style.cursor = 'pointer';
+        arrowLeft.addEventListener('click', function() {
+            goTo(current - 1);
+            restartProgress();
+        });
+    }
+
+    if (arrowRight) {
+        arrowRight.style.cursor = 'pointer';
+        arrowRight.addEventListener('click', function() {
+            goTo(current + 1);
+            restartProgress();
+        });
     }
 }
 
-// Navigation function
-function navigateToHome() {
-    window.location.href = 'index.html';
+// Section-Con1 Slider
+function initCon1Slider() {
+    var imgSlides = document.querySelectorAll('.main-img-slide');
+    var textSlides = document.querySelectorAll('.slider-text-slide');
+    if (!imgSlides.length) return;
+
+    var prevBtn = document.querySelector('.slider-btn-prev');
+    var nextBtn = document.querySelector('.slider-btn-next');
+    var current = 0;
+    var total = imgSlides.length;
+
+    function goTo(index) {
+        imgSlides[current].classList.remove('active');
+        if (textSlides[current]) textSlides[current].classList.remove('active');
+        current = (index + total) % total;
+        imgSlides[current].classList.add('active');
+        if (textSlides[current]) textSlides[current].classList.add('active');
+    }
+
+    var autoTimer = setInterval(function() {
+        goTo(current + 1);
+    }, 4000);
+
+    function resetTimer() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(function() {
+            goTo(current + 1);
+        }, 4000);
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            goTo(current - 1);
+            resetTimer();
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            goTo(current + 1);
+            resetTimer();
+        });
+    }
 }
 
-// Facility Slider Functions
-window.facilityCurrentSlide = 0;
-window.facilityTotalSlides = 1;
+// Section-Con2 롤링 갤러리 (RAF 기반)
+function initRollingGallery() {
+    var track = document.querySelector('.rolling-track');
+    if (!track) return;
 
-function updateFacilitySlider() {
-    const slides = document.querySelectorAll('.facility-slide');
-    const indicators = document.querySelectorAll('.facility-indicator');
+    if (window._rollingRafId) {
+        cancelAnimationFrame(window._rollingRafId);
+        window._rollingRafId = null;
+    }
 
-    slides.forEach((slide, index) => {
-        slide.style.opacity = index === window.facilityCurrentSlide ? '1' : '0';
+    track.style.animation = 'none';
+    track.style.transform = 'translateX(0)';
+
+    var setEl = track.querySelector('.rolling-set');
+    var setWidth = setEl ? setEl.offsetWidth : 2440;
+
+    var PX_PER_SEC_DESKTOP = 50;
+    var PX_PER_SEC_MOBILE  = 80;
+
+    var position  = 0;
+    var dragging  = false;
+    var dragStartX = 0;
+    var dragStartPos = 0;
+    var lastTime  = null;
+    var DRAG_THRESHOLD = 8;
+    var dragThresholdPassed = false;
+
+    function getPxPerSec() {
+        return window.innerWidth <= 768 ? PX_PER_SEC_MOBILE : PX_PER_SEC_DESKTOP;
+    }
+
+    function tick(ts) {
+        if (lastTime !== null) {
+            var delta = Math.min((ts - lastTime) / 1000, 0.1);
+            if (!dragging) {
+                position += getPxPerSec() * delta;
+                position = position % setWidth;
+                track.style.transform = 'translateX(-' + Math.round(position) + 'px)';
+            }
+        }
+        lastTime = ts;
+        window._rollingRafId = requestAnimationFrame(tick);
+    }
+
+    window._rollingRafId = requestAnimationFrame(tick);
+
+    function onDragStart(x) {
+        dragStartX = x;
+        dragStartPos = position;
+        dragThresholdPassed = false;
+    }
+
+    function onDragMove(x) {
+        var diff = x - dragStartX;
+        if (!dragThresholdPassed) {
+            if (Math.abs(diff) < DRAG_THRESHOLD) return;
+            dragThresholdPassed = true;
+            dragging = true;
+        }
+        position = dragStartPos - diff;
+        position = ((position % setWidth) + setWidth) % setWidth;
+        track.style.transform = 'translateX(-' + Math.round(position) + 'px)';
+    }
+
+    function onDragEnd() {
+        dragging = false;
+        dragThresholdPassed = false;
+        lastTime = null;
+    }
+
+    track.addEventListener('touchstart', function(e) {
+        onDragStart(e.touches[0].clientX);
+    }, { passive: true });
+
+    track.addEventListener('touchmove', function(e) {
+        onDragMove(e.touches[0].clientX);
+    }, { passive: true });
+
+    track.addEventListener('touchend', onDragEnd);
+    track.addEventListener('touchcancel', onDragEnd);
+
+    track.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        onDragStart(e.clientX);
+        track.style.cursor = 'grabbing';
     });
 
-    indicators.forEach((indicator, index) => {
-        indicator.style.background = index === window.facilityCurrentSlide ? 'white' : 'rgba(255,255,255,0.5)';
+    window.addEventListener('mousemove', function(e) {
+        if (!dragThresholdPassed && !dragging) return;
+        onDragMove(e.clientX);
+    });
+
+    window.addEventListener('mouseup', function() {
+        if (!dragging && !dragThresholdPassed) return;
+        track.style.cursor = 'grab';
+        onDragEnd();
+    });
+
+    track.style.cursor = 'grab';
+}
+
+// Special Slideshow (Content-3)
+function initSpecialSlideshow() {
+    var content3 = document.querySelector('.content-3');
+    if (!content3) return;
+
+    var slides = content3.querySelectorAll('.meditation-image .facility-slide');
+    var total = slides.length;
+    if (total === 0) return;
+
+    var current = 0;
+    var progress = content3.querySelector('.bar-progress');
+    var barBtns = content3.querySelectorAll('.bar-controls button');
+
+    function showSlide(index) {
+        var containers = ['.meditation-image', '.meditation-info', '.special-right-image'];
+        containers.forEach(function(sel) {
+            content3.querySelectorAll(sel + ' .facility-slide').forEach(function(el, i) {
+                el.classList.toggle('active', i === index);
+            });
+        });
+    }
+
+    showSlide(0);
+
+    if (progress) {
+        progress.addEventListener('animationiteration', function() {
+            current = (current + 1) % total;
+            showSlide(current);
+        });
+    }
+
+    function restartProgress() {
+        if (!progress) return;
+        progress.style.animation = 'none';
+        progress.offsetHeight;
+        progress.style.animation = '';
+    }
+
+    if (barBtns.length >= 2) {
+        barBtns[0].addEventListener('click', function() {
+            current = (current - 1 + total) % total;
+            showSlide(current);
+            restartProgress();
+        });
+        barBtns[1].addEventListener('click', function() {
+            current = (current + 1) % total;
+            showSlide(current);
+            restartProgress();
+        });
+    }
+}
+
+// Scroll Animations (IntersectionObserver)
+function initFacilityScrollAnimations() {
+    var animElements = document.querySelectorAll(
+        '.anim-fade-up, .anim-fade-right, .anim-scale-in'
+    );
+    if (!animElements.length) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -60px 0px'
+    });
+
+    animElements.forEach(function(el) {
+        observer.observe(el);
     });
 }
 
-function nextFacilitySlide() {
-    if (window.facilityTotalSlides <= 1) return;
-
-    window.facilityCurrentSlide = (window.facilityCurrentSlide + 1) % window.facilityTotalSlides;
-    updateFacilitySlider();
-}
-
-function prevFacilitySlide() {
-    if (window.facilityTotalSlides <= 1) return;
-
-    window.facilityCurrentSlide = window.facilityCurrentSlide === 0
-        ? window.facilityTotalSlides - 1
-        : window.facilityCurrentSlide - 1;
-    updateFacilitySlider();
-}
-
-function goToFacilitySlide(index) {
-    if (index >= 0 && index < window.facilityTotalSlides) {
-        window.facilityCurrentSlide = index;
-        updateFacilitySlider();
-    }
-}
-
-// Auto-play functionality (optional)
-let facilityAutoSlideTimer;
-function startFacilityAutoSlide() {
-    if (window.facilityTotalSlides <= 1) return;
-
-    facilityAutoSlideTimer = setInterval(() => {
-        nextFacilitySlide();
-    }, 4000); // 4초마다 자동 슬라이드
-}
-
-function stopFacilityAutoSlide() {
-    if (facilityAutoSlideTimer) {
-        clearInterval(facilityAutoSlideTimer);
-    }
-}
-
-// Touch 슬라이드 변수
-let facilityTouchStartX = 0;
-let facilityTouchEndX = 0;
-let facilityIsTouchMove = false;
-
-// Touch 이벤트 핸들러
-function handleFacilityTouchStart(e) {
-    facilityTouchStartX = e.changedTouches[0].screenX;
-    facilityIsTouchMove = false;
-}
-
-function handleFacilityTouchMove(e) {
-    facilityIsTouchMove = true;
-}
-
-function handleFacilityTouchEnd(e) {
-    facilityTouchEndX = e.changedTouches[0].screenX;
-
-    if (!facilityIsTouchMove) return;
-
-    const threshold = 50; // 최소 스와이프 거리
-    const swipeDistance = facilityTouchStartX - facilityTouchEndX;
-
-    if (Math.abs(swipeDistance) > threshold) {
-        if (swipeDistance > 0) {
-            // 왼쪽으로 스와이프 = 다음 슬라이드
-            nextFacilitySlide();
-        } else {
-            // 오른쪽으로 스와이프 = 이전 슬라이드
-            prevFacilitySlide();
-        }
-    }
-}
-
-// Adaptive Facility Gallery - Grid or Slider based on image count
-const facilityGallery = {
-    currentIndex: 0,
-    autoplayInterval: null,
-    autoplayDelay: 3000,
-    isSliding: false,
-
-    // Sample data - This can be replaced with dynamic JSON data
-    images: [
-        {
-            url: '',
-            title: '메인 라운지',
-            description: '편안한 휴식 공간'
-        },
-        {
-            url: '',
-            title: '야외 테라스',
-            description: '자연과 함께하는 공간'
-        },
-        {
-            url: '',
-            title: '반려견 놀이터',
-            description: '안전한 놀이 공간'
-        },
-        {
-            url: '',
-            title: '객실',
-            description: '편안한 숙소'
-        },
-        {
-            url: '',
-            title: '욕실',
-            description: '깨끗한 욕실'
-        }
-    ],
-
-    init() {
-        const container = document.getElementById('facility-gallery-container');
-        if (!container) {
-            return;
-        }
-
-        const imageCount = this.images.length;
-
-        if (imageCount === 0) {
-            // 이미지가 없을 때 3개 placeholder 그리드 생성
-            this.createPlaceholderGrid(container);
-            return;
-        }
-
-        if (imageCount <= 3) {
-            this.createGrid(container, imageCount);
-        } else {
-            this.createSlider(container);
-        }
-    },
-
-    createGrid(container, count) {
-        const gridClass = `gallery-grid gallery-grid-${count}`;
-        container.innerHTML = `<div class="${gridClass}"></div>`;
-        const grid = container.querySelector('.gallery-grid');
-
-        // Create grid items
-        for (let i = 0; i < count; i++) {
-            const item = this.images[i];
-            const gridItem = document.createElement('div');
-            gridItem.className = 'gallery-item';
-
-            const isMobile = window.innerWidth <= 768;
-
-            if (!isMobile) {
-                // 데스크탑에서만 이미지 개수에 따라 높이 다르게 설정
-                if (count === 1) {
-                    gridItem.style.height = '600px';
-                } else if (count === 2) {
-                    gridItem.style.height = '500px';
-                } else if (count === 3) {
-                    // Center image larger for 3-image layout
-                    if (i === 1) {
-                        gridItem.style.height = '500px';
-                        gridItem.style.marginTop = '-50px'; // 중앙 이미지 50px 위로 조정
-                    } else {
-                        gridItem.style.height = '400px';
-                    }
-                }
-            }
-
-            // 이미지 컨테이너 div 생성
-            const imageContainer = document.createElement('div');
-            imageContainer.className = 'relative overflow-hidden rounded-lg aspect-[4/3] bg-gray-100';
-            imageContainer.style.cssText = 'width: 100%; height: 100%;';
-
-            if (item.url && item.url.trim() !== '') {
-                // 이미지가 있는 경우
-                const img = document.createElement('img');
-                img.src = item.url;
-                img.alt = 'Gallery Image';
-                img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block;';
-                imageContainer.appendChild(img);
-            } else {
-                // 이미지가 없는 경우 - 기존 empty-image-placeholder 방식으로 일관성 유지
-                const img = document.createElement('img');
-                img.src = '';
-                img.alt = 'No Image Available';
-                img.className = 'w-full h-full object-cover empty-image-placeholder';
-                img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block; min-height: 300px;';
-                imageContainer.appendChild(img);
-            }
-
-            gridItem.appendChild(imageContainer);
-
-            grid.appendChild(gridItem);
-        }
-    },
-
-    createSlider(container) {
-        container.innerHTML = `
-            <div class="gallery-slider">
-                <div class="slider-track-container">
-                    <div class="slider-track"></div>
-                </div>
-                <button class="slider-nav prev" onclick="facilityGallery.prev()">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
-                    </svg>
-                </button>
-                <button class="slider-nav next" onclick="facilityGallery.next()">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
-            </div>
-        `;
-
-        const track = container.querySelector('.slider-track');
-
-        // Create slider items
-        this.images.forEach((item, index) => {
-            const sliderItem = document.createElement('div');
-            sliderItem.className = 'slider-item';
-            sliderItem.innerHTML = `
-                <img src="${item.url}" alt="Gallery Image" onload="this.classList.remove('empty-image-placeholder')" onerror="this.classList.add('empty-image-placeholder')">
-            `;
-            track.appendChild(sliderItem);
-        });
-
-        // Clone first and last items for infinite loop
-        const firstClone = track.children[0].cloneNode(true);
-        const lastClone = track.children[track.children.length - 1].cloneNode(true);
-        track.appendChild(firstClone);
-        track.insertBefore(lastClone, track.children[0]);
-
-        // Set initial position to show first real image in center
-        this.currentIndex = 1; // First real image is at index 1 (after clone)
-
-        // Initialize position and classes immediately
-        this.updateSliderPosition(false);
-
-        // Start autoplay
-        this.startAutoplay();
-
-        // Pause on hover
-        container.querySelector('.gallery-slider').addEventListener('mouseenter', () => {
-            this.stopAutoplay();
-        });
-
-        container.querySelector('.gallery-slider').addEventListener('mouseleave', () => {
-            this.startAutoplay();
-        });
-    },
-
-    updateSliderPosition(animate = true) {
-        const track = document.querySelector('.slider-track');
-        if (!track) return;
-
-        const sliderContainer = document.querySelector('.slider-track-container');
-        if (!sliderContainer) return;
-
-        // Fixed sizes for items
-        const items = track.querySelectorAll('.slider-item');
-        const containerWidth = sliderContainer.offsetWidth;
-
-        // Check if mobile
-        const isMobile = window.innerWidth <= 768;
-
-        let offset;
-
-        if (isMobile) {
-            // Mobile: center the active item perfectly (no gap)
-            const itemWidth = containerWidth; // 100% width on mobile
-
-            // Simply move by full container width for each slide
-            offset = -((this.currentIndex - 1) * itemWidth);
-        } else {
-            // Desktop: show 3 items as before
-            const centerItemWidth = 520;
-            const sideItemWidth = 320;
-            const gap = 20;
-
-            // Calculate to always show 3 items centered in container
-            const threeItemsWidth = sideItemWidth + gap + centerItemWidth + gap + sideItemWidth;
-            const containerCenter = containerWidth / 2;
-            const threeItemsCenter = threeItemsWidth / 2;
-
-            // Base offset to center the 3-item group in container
-            const baseOffset = containerCenter - threeItemsCenter;
-
-            // Adjust position based on current index
-            const itemStep = sideItemWidth + gap;
-            offset = baseOffset - ((this.currentIndex - 1) * itemStep);
-        }
-
-        if (animate) {
-            track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        } else {
-            track.style.transition = 'none';
-        }
-
-        track.style.transform = `translateX(${offset}px)`;
-
-        // Update active states - only for desktop
-        if (!isMobile) {
-            items.forEach((item, index) => {
-                item.classList.remove('active', 'side');
-
-                if (index === this.currentIndex) {
-                    // Current index item is the center (large)
-                    item.classList.add('active');
-                } else if (index === this.currentIndex - 1 || index === this.currentIndex + 1) {
-                    // Adjacent items are sides (smaller)
-                    item.classList.add('side');
-                }
-            });
-        } else {
-            // Mobile: remove all active/side classes for simple slider
-            items.forEach((item) => {
-                item.classList.remove('active', 'side');
-            });
-        }
-    },
-
-    next() {
-        if (this.isSliding) return;
-        this.isSliding = true;
-
-        this.currentIndex++;
-        this.updateSliderPosition();
-
-        // Handle infinite loop
-        setTimeout(() => {
-            if (this.currentIndex >= this.images.length + 1) {
-                this.currentIndex = 1;
-                this.updateSliderPosition(false);
-            }
-            this.isSliding = false;
-        }, 500);
-    },
-
-    prev() {
-        if (this.isSliding) return;
-        this.isSliding = true;
-
-        this.currentIndex--;
-        this.updateSliderPosition();
-
-        // Handle infinite loop
-        setTimeout(() => {
-            if (this.currentIndex <= 0) {
-                this.currentIndex = this.images.length;
-                this.updateSliderPosition(false);
-            }
-            this.isSliding = false;
-        }, 500);
-    },
-
-    startAutoplay() {
-        this.stopAutoplay();
-        this.autoplayInterval = setInterval(() => {
-            this.next();
-        }, this.autoplayDelay);
-    },
-
-    stopAutoplay() {
-        if (this.autoplayInterval) {
-            clearInterval(this.autoplayInterval);
-            this.autoplayInterval = null;
-        }
-    },
-
-    createPlaceholderGrid(container) {
-        // 3개 placeholder 이미지 그리드 생성
-        const gridClass = 'gallery-grid gallery-grid-3';
-        container.innerHTML = `<div class="${gridClass}"></div>`;
-        const grid = container.querySelector('.gallery-grid');
-
-        // 3개 placeholder 아이템 생성
-        for (let i = 0; i < 3; i++) {
-            const gridItem = document.createElement('div');
-            gridItem.className = 'gallery-item';
-
-            const isMobile = window.innerWidth <= 768;
-
-            if (!isMobile) {
-                if (i === 1) {
-                    gridItem.style.height = '500px';
-                    gridItem.style.marginTop = '-50px';
-                } else {
-                    gridItem.style.height = '400px';
-                }
-            }
-
-            const img = document.createElement('img');
-            img.src = '';
-            img.alt = 'No Image Available';
-            img.className = 'w-full h-full object-cover empty-image-placeholder';
-            img.style.cssText = 'width: 100%; height: 100%; object-fit: cover; display: block; min-height: 300px;';
-
-            gridItem.appendChild(img);
-            grid.appendChild(gridItem);
-        }
-    }
-};
-
-window.facilityGallery = facilityGallery;
-
-// Image Modal functionality
-const imageModal = {
-    modal: null,
-    modalImage: null,
-    modalClose: null,
-    modalPrev: null,
-    modalNext: null,
-    currentImages: [],
-    currentIndex: 0,
-
-    init() {
-        this.modal = document.getElementById('image-modal');
-        this.modalImage = document.getElementById('modal-image');
-        this.modalClose = document.getElementById('modal-close');
-        this.modalPrev = document.getElementById('modal-prev');
-        this.modalNext = document.getElementById('modal-next');
-
-        if (!this.modal) {
-            return;
-        }
-
-        // Event listeners
-        this.modalClose.addEventListener('click', () => this.closeModal());
-        this.modalPrev.addEventListener('click', () => this.modalPrevImage());
-        this.modalNext.addEventListener('click', () => this.modalNextImage());
-
-        // Close modal on background click
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) this.closeModal();
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (this.modal.classList.contains('hidden')) {
-                return;
-            }
-            switch (e.key) {
-                case 'Escape':
-                    this.closeModal();
-                    break;
-                case 'ArrowLeft':
-                    this.modalPrevImage();
-                    break;
-                case 'ArrowRight':
-                    this.modalNextImage();
-                    break;
-            }
-        });
-
-        this.setupImageClickHandlers();
-    },
-
-    setupImageClickHandlers() {
-        // Add click handlers to gallery images
-        document.addEventListener('click', (e) => {
-            const galleryImage = e.target.closest('.gallery-item img, .slider-item img');
-            if (galleryImage && !galleryImage.classList.contains('empty-image-placeholder')) {
-                e.preventDefault();
-                this.openModal(galleryImage);
-            }
-        });
-    },
-
-    openModal(clickedImage) {
-        const galleryImages = document.querySelectorAll('.gallery-item img, .slider-item img');
-        this.currentImages = Array.from(galleryImages)
-            .filter(img => !img.classList.contains('empty-image-placeholder') && img.src)
-            .map(img => ({
-                url: img.src,
-                alt: img.alt || 'Gallery Image'
-            }));
-
-        if (this.currentImages.length === 0) return;
-
-        this.currentIndex = this.currentImages.findIndex(img => img.url === clickedImage.src);
-        if (this.currentIndex === -1) this.currentIndex = 0;
-
-        this.updateModalImage();
-
-        // Save current scroll position
-        const scrollY = window.scrollY;
-        document.body.style.top = `-${scrollY}px`;
-
-        // Show modal and prevent body scroll
-        this.modal.classList.remove('hidden');
-        this.modal.classList.add('flex');
-        document.body.classList.add('modal-open');
-    },
-
-    closeModal() {
-        this.modal.classList.add('hidden');
-        this.modal.classList.remove('flex');
-
-        // Restore scroll position
-        const scrollY = document.body.style.top;
-        document.body.classList.remove('modal-open');
-        document.body.style.top = '';
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
-    },
-
-    updateModalImage() {
-        if (!this.currentImages || this.currentImages.length === 0) return;
-        const image = this.currentImages[this.currentIndex];
-        this.modalImage.src = image.url;
-        this.modalImage.alt = image.alt;
-    },
-
-    modalPrevImage() {
-        if (this.currentImages.length <= 1) return;
-
-        this.currentIndex = (this.currentIndex - 1 + this.currentImages.length) % this.currentImages.length;
-        this.updateModalImage();
-    },
-
-    modalNextImage() {
-        if (this.currentImages.length <= 1) return;
-
-        this.currentIndex = (this.currentIndex + 1) % this.currentImages.length;
-        this.updateModalImage();
-    }
-};
-
-// Initialize modal when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const initModalWhenReady = (retries = 0) => {
-        const galleryContent = document.querySelector('#facility-gallery-container .gallery-grid, #facility-gallery-container .gallery-slider');
-        if (galleryContent) {
-            imageModal.init();
-        } else if (retries < 50) { // Wait up to 5 seconds
-            setTimeout(() => initModalWhenReady(retries + 1), 100);
-        } else {
-        }
-    };
-    initModalWhenReady();
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    initMainSlideshow();
+    initCon1Slider();
+    initRollingGallery();
+    initSpecialSlideshow();
+    initFacilityScrollAnimations();
 });
 
-window.imageModal = imageModal;
-
-// Clean up on page unload
-window.addEventListener('beforeunload', () => {
-    facilityGallery.stopAutoplay();
-});
-
+// Global expose for mapper reinit
+window.initFacilityMainSlider = initMainSlideshow;
+window.initFacilityCon1Slider = initCon1Slider;
+window.initFacilityRollingTouch = initRollingGallery;
+window.initSpecialSlideshow = initSpecialSlideshow;
+window.initFacilityScrollAnimations = initFacilityScrollAnimations;
