@@ -1,420 +1,646 @@
-/* Facility Page Styles */
+/* ===========================
+   Facility Page Styles (Figma export 기반)
+   - 헤더/푸터/Hero는 공통 (header.css/footer.css/directions.css 사용)
+   - 본 파일은 facility 페이지 전용 컨텐츠(.facility-inner, .con-32)만 담당
+   - 모든 셀렉터를 .facility-page 부모로 스코프해 다른 페이지와 충돌 방지
+   =========================== */
 
-/* Experience Section Styles */
-.experience-section .experience-info-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e5e7eb;
+/* special-section: 웹은 기존 위치 유지, 모바일에서만 100px 위로 이동 (≤768px 미디어쿼리에서 처리) */
+.facility-page .special-section {
+  position: relative;
+  z-index: 1;
 }
 
-.experience-section .experience-info-item:last-child {
-    border-bottom: none;
+/* Hero address-container: "Facility" 타이틀 가운데 정렬 (모든 viewport)
+   directions.css의 우측 정렬 기본값 덮어쓰기 */
+.facility-page .address-container-parent {
+  align-items: center !important;
+}
+.facility-page .address-container {
+  align-items: center !important;
+}
+.facility-page .direction-info {
+  justify-content: center !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+.facility-page .direction2 {
+  text-align: center !important;
 }
 
-.experience-section .info-title {
-    color: #5D4037;
-    font-weight: 600;
-    margin-right: 0.5rem;
+/* 1. FACILITY-INNER (Specials 01~05 카드 무한 롤링)
+   bg-parent2 섹션 내부에 통합되어 자연스럽게 표시됨 */
+.facility-page .facility-inner {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 0;                /* 100 → 0 (상단 마진 제거) */
+  padding: 40px 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+  text-align: left;
+  font-size: 42px;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
+  position: relative;
+  z-index: 1;
+}
+.facility-page .image-container-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;       /* flex-end → flex-start: con2(max-content)의 좌측 정렬 → img14(Specials 01)부터 viewport에 표시 */
+  gap: 124px;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.facility-page .image-container2 {
+  width: 1267px;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+.facility-page .img {
+  width: 959px;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 25px;
+  z-index: 1;
+}
+.facility-page .img2-group {
+  height: 564px;
+  flex: 1;
+  position: relative;
+  min-width: 315px;
+  max-width: 100%;
+}
+.facility-page .img1-icon7,
+.facility-page .img2-icon {
+  position: absolute;
+  object-fit: cover;
+}
+.facility-page .img2-icon {
+  top: 164px;
+  left: 134px;
+  width: 350px;
+  height: 400px;
+}
+.facility-page .img1-icon7 {
+  top: 0;
+  left: 0;
+  border-radius: 100px 0 100px 0;
+  width: 300px;
+  height: 280px;
+  z-index: 1;
+}
+.facility-page .img3-icon {
+  width: 450px;
+  height: 600px;                /* 명시적 사이즈 */
+  position: relative;
+  object-fit: cover;
+  max-width: 100%;
+  padding-left: 130px;
+  box-sizing: content-box;      /* border-box → content-box: 450x600은 컨텐츠 사이즈, padding은 추가 영역 */
 }
 
-.experience-section .info-description {
-    color: #666;
-    line-height: 1.6;
+/* 2. CON2 — Specials 카드 무한 롤링 트랙
+   .image-container-parent를 overflow:hidden 컨테이너로 사용 */
+.facility-page .image-container-parent {
+  overflow: hidden;
+}
+.facility-page .con2 {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+  width: max-content;
+  animation: facility-con2-scroll 35s linear infinite;
+}
+.facility-page .image-container-parent:hover .con2 {
+  animation-play-state: paused;
+}
+/* 정확한 픽셀로 이동: 카드 5개 width(5×360) + gap 5개(5×20) = 1900px
+   원본 5개 끝 + gap 1개 후 = 복제 1번 카드 시작점 → 완벽 seamless */
+@keyframes facility-con2-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-1900px);
+  }
+}
+.facility-page .img14,
+.facility-page .img23,
+.facility-page .img3,
+.facility-page .img43,
+.facility-page .img5 {
+  height: 300px;
+  width: 360px;
+  min-width: 360px;          /* 무한 롤링 안정성: 어떤 viewport에서도 360px 고정 */
+  flex-shrink: 0;
+  flex-grow: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 224px 2px 0;
+  box-sizing: border-box;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  overflow: hidden;
+}
+/* 갤러리 배경 이미지 — facility-mapper.js에서 동적 매핑 */
+.facility-page .img3  { padding: 224px 3px 0; }
+.facility-page .img43 { padding: 224px 0 0; }
+.facility-page .img5  { padding: 224px 4px 0; }
+.facility-page .specials-01,
+.facility-page .specials-03,
+.facility-page .specials-04,
+.facility-page .specials-05 {
+  height: 76px;
+  width: 200px;
+  position: relative;
+  line-height: 180%;
+  display: inline-block;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
+  font-size: 42px;
+  letter-spacing: -0.01em;
 }
 
-.experience-section .experience-benefit-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #e5e7eb;
+/* SPECIAL SECTION:
+   - 좌측 .specials-card-img / -border : index.css의 라운드 도형(400/300px) 유지
+   - 우측 .special-image / .special-image-slide : CSS 라운딩 제거 +
+     이미지 자체에 박힌 라운드 모양(Figma mockup) 가리려고 background-size 110%로 확대 */
+.facility-page .special-image,
+.facility-page .special-image-slide {
+  border-radius: 0 !important;
+}
+.facility-page .special-image-slide {
+  background-size: 110% auto !important;     /* 5%씩 확대 → 라운드 가장자리가 .special-image overflow:hidden 밖으로 잘림 */
+  background-position: center center !important;
 }
 
-.experience-section .experience-benefit-item:last-child {
-    border-bottom: none;
+/* 3. BG-PARENT2 — facility info 상세 영역 (모든 자식이 bg-parent2 안에 통합)
+   info-title / title7 / bg6 / image-container2 가 세로로 자연 스택됨
+   width: 80vw — viewport의 80% 폭, 가운데 정렬 */
+.facility-page .bg-parent2 {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0 80px;
+  box-sizing: border-box;
+  isolation: isolate;
+  gap: 30px;
+  overflow: visible;             /* hidden → visible: bg 이미지가 잘리지 않게 */
+  min-height: 1100px;            /* bg 이미지 자연 비율(약 0.63 가로/세로) 수용 */
+}
+/* bg-parent2-content: 텍스트 + 이미지 그룹을 viewport 정중앙에 배치
+   - max-width + margin auto로 wrapper 자체 중앙 정렬
+   - 모든 위치/마진/transform 값 강제로 균형 (다른 곳에 비대칭 값이 있어도 override) */
+.facility-page .bg-parent2 .bg-parent2-content {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  width: 100%;
+  max-width: 1600px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: clamp(20px, 4vw, 60px) !important;
+  padding-right: clamp(20px, 4vw, 60px) !important;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 60px;
+}
+/* bg-parent2-text: 그룹의 좌측 자식 — 모든 비대칭 마진/패딩/transform 강제 제거 */
+.facility-page .bg-parent2 .bg-parent2-text {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.facility-page .bg-parent2 .bg-parent2-text .bg6 {
+  align-self: flex-start !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 100%;
+}
+/* info-title, title7: 가운데 정렬 + 내부 텍스트도 가운데 */
+.facility-page .bg-parent2 .bg-parent2-text .info-title,
+.facility-page .bg-parent2 .bg-parent2-text .title7 {
+  align-self: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 100%;
+  text-align: center !important;
+  justify-content: center !important;
+}
+.facility-page .bg-parent2 .bg-parent2-text .info-title .facility-info,
+.facility-page .bg-parent2 .bg-parent2-text .title7 .h14,
+.facility-page .bg-parent2 .bg-parent2-text .title7 .h325 {
+  text-align: center !important;
+  align-self: center !important;
+  width: 100%;
+}
+/* image-container2 — 옛 규칙 reset, 좌우 대칭 강제 */
+.facility-page .bg-parent2 .image-container2 {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 760px;
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1;
+  overflow: visible;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+}
+/* 내부 .img 좌우 대칭 + 자연 정렬 */
+.facility-page .bg-parent2 .image-container2 > .img {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  justify-content: center;        /* 자식 가운데 정렬 */
+}
+/* img3-icon의 padding-left:130(비대칭) → 0으로 리셋. 그룹이 우측으로 밀리는 원인 제거 */
+.facility-page .bg-parent2 .image-container2 .img3-icon {
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+.facility-page .bg-parent2 .image-container2 .img {
+  flex-wrap: nowrap !important;
+  transform-origin: top right;
 }
 
-.experience-section .benefit-title {
-    color: #5D4037;
-    font-weight: 600;
-    font-size: 1.125rem;
-    margin-bottom: 0.5rem;
+/* ≥1600px: 좌우 80px 패딩 + 텍스트/이미지 max-width 확대 (그룹 가운데 정렬은 유지) */
+@media screen and (min-width: 1600px) {
+  .facility-page .bg-parent2 .bg-parent2-content {
+    padding-left: 80px;
+    padding-right: 80px;
+    gap: 80px;
+  }
+  .facility-page .bg-parent2 .bg-parent2-text {
+    max-width: 760px;
+  }
+  .facility-page .bg-parent2 .image-container2 {
+    max-width: 760px;
+  }
+  /* 텍스트/이미지 폰트도 비슷한 비율로 확대 */
+  .facility-page .bg-parent2 .facility-info,
+  .facility-page .bg-parent2 .h14,
+  .facility-page .bg-parent2 .h325,
+  .facility-page .bg-parent2 .h326,
+  .facility-page .bg-parent2 .div22 {
+    font-size: 1.12em;
+  }
 }
 
-.experience-section .benefit-description {
-    color: #666;
-    line-height: 1.6;
+/* ≤1050: directions.css의 .content padding-bottom: 73px 무력화 (facility 한정)
+   → bg-parent2-bg가 hero 바로 아래에 붙어 보이도록 여백 제거
+   .bg2의 padding-bottom은 유지 (bg-child 위치는 main/directions와 동일하게) */
+@media screen and (max-width: 1050px) {
+  .facility-page .content {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* ≤1400: image-container2를 absolute 해제 → bg-parent2-text 아래로 자연 스택 */
+/* ≤1400: 한 줄 나열(row) 해제 → 컬럼 스택 (텍스트 위, 이미지 아래) */
+@media screen and (max-width: 1400px) {
+  .facility-page .bg-parent2 .bg-parent2-content {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .facility-page .bg-parent2 .bg-parent2-text {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .facility-page .bg-parent2 .image-container2 {
+    width: 100%;
+    max-width: 100%;
     margin: 0;
+  }
+  .facility-page .bg-parent2 .image-container2 .img {
+    transform: scale(min(1, calc((100vw - 40px) / 920)));
+    transform-origin: top center;
+  }
 }
 
-/* Gallery Layout Styles */
-
-/* 갤러리 섹션 배경 */
-.gallery-section {
-    width: 100%;
-}
-
-/* 갤러리 컨테이너 고정 높이로 레이아웃 안정화 */
-#facility-gallery-container {
-    min-height: 600px; /* 최소 높이 설정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Grid Layout Styles */
-.gallery-grid {
-    display: grid;
-    gap: 2rem;
-    animation: fadeIn 0.8s ease;
-    padding: 0 2rem;
-    width: 100%;
-}
-
-/* 1 image - centered */
-.gallery-grid-1 {
-    grid-template-columns: 1fr;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* 2 images - side by side */
-.gallery-grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 1000px;
-    margin: 0 auto;
-    gap: 2.5rem;
-}
-
-/* 3 images - triangle or row */
-.gallery-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 1400px;
-    margin: 0 auto;
-    gap: 2rem;
-    align-items: start; /* 상단 정렬로 중앙 이미지가 아래로 내려가는 효과 */
-}
-
-/* Facility main image placeholder 스타일 - hero 영역과 동일하게 */
-.facility-info-section img.empty-image-placeholder {
-    /* 기본 empty-image-placeholder 스타일 사용하되 둥근 모서리 유지 */
-    border-radius: 1.5rem !important; /* rounded-3xl */
-}
-
-/* Facility main image placeholder 아이콘 강제 표시 */
-.facility-info-section img.empty-image-placeholder::after {
-    content: "" !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 64px !important;
-    height: 64px !important;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%236b7280' stroke-width='1.5' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E") !important;
-    background-size: contain !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    z-index: 2 !important;
-    display: block !important;
-}
-
-/* Gallery placeholder 컨테이너 크기 고정 */
-.gallery-grid .gallery-item {
-    width: 100%;
-    height: auto;
-    min-height: 300px; /* 최소 높이 설정 */
-}
-
-.gallery-grid .gallery-item > div {
-    width: 100%;
-    height: 100%;
-    min-height: 300px; /* placeholder와 동일한 최소 높이 */
-}
-
-/* Gallery items */
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1rem;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    background: white;
-}
-
-/* 3개 이미지 그리드의 중앙 아이템은 margin-top 유지하면서 hover 효과 적용 */
-.gallery-grid-3 .gallery-item:nth-child(2):hover {
-    transform: translateY(-8px) scale(1.02); /* 일반적인 hover 효과 */
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.gallery-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item:hover img {
-    transform: scale(1.08);
-}
-
-
-/* Slider Styles - 참고 사이트처럼 */
-.gallery-slider {
-    position: relative;
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0;
-    min-height: 500px; /* 슬라이더 최소 높이 설정 */
-    display: flex;
-    align-items: center;
-}
-
-.slider-track-container {
-    overflow: hidden;
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    position: relative;
-    height: 500px; /* 고정 높이로 레이아웃 안정화 */
-    display: flex;
-    align-items: center;
-}
-
-.slider-track {
-    display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    gap: 20px;
-    align-items: center;
-    padding: 0;
-    will-change: transform; /* GPU 가속으로 부드러운 transform */
-    backface-visibility: hidden; /* 백페이스 숨김으로 렌더링 최적화 */
-}
-
-.slider-item {
-    flex: 0 0 320px;
-    height: 360px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 0;
-    cursor: pointer;
-    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1), height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 1;
-    transform: translateY(0);
-    will-change: flex, height, opacity; /* GPU 가속으로 부드러운 애니메이션 */
-}
-
-.slider-item.active {
-    flex: 0 0 520px;
-    height: 500px;
-    opacity: 1;
-    z-index: 2;
-    transform: translateY(0);
-}
-
-/* 데스크탑에서만 side 아이템 opacity 효과 적용 */
-@media (min-width: 769px) {
-    .slider-item.side {
-        opacity: 0.7;
-    }
-}
-
-.slider-item.side {
-    flex: 0 0 320px;
-    height: 360px;
-    transform: translateY(0);
-}
-
-.slider-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 15px;
-    transition: transform 0.5s ease;
-}
-
-.slider-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    border: none;
-    width: 50px;
-    height: 50px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.slider-nav:hover {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.slider-nav.prev {
-    left: 10px;
-}
-
-.slider-nav.next {
-    right: 10px;
-}
-
-.slider-nav svg {
-    width: 24px;
-    height: 24px;
-    stroke: #333;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    /* 모바일에서 1,2,3개 이미지는 동일한 사이즈와 여백으로 정렬 */
-    .gallery-grid-1 {
-        max-width: 100%;
-        padding: 0 1rem;
-    }
-
-    .gallery-grid-2 {
-        grid-template-columns: 1fr;
-        max-width: 100%;
-        padding: 0 1rem;
-        gap: 1.5rem; /* 동일한 여백 */
-    }
-
-    .gallery-grid-3 {
-        grid-template-columns: 1fr;
-        max-width: 100%;
-        padding: 0 1rem;
-        gap: 1.5rem; /* 동일한 여백 */
-        align-items: stretch; /* 모바일에서는 정렬 무시 */
-    }
-
-    /* 모바일에서 모든 갤러리 아이템 동일한 높이 */
-    .gallery-grid-1 .gallery-item,
-    .gallery-grid-2 .gallery-item,
-    .gallery-grid-3 .gallery-item {
-        height: 280px !important; /* 동일한 높이 강제 적용 */
-        transform: none !important; /* transform 효과 제거 */
-        margin-top: 0 !important; /* margin-top 효과 제거 */
-    }
-
-    /* 모바일에서 hover 효과 간소화 */
-    .gallery-grid-1 .gallery-item:hover,
-    .gallery-grid-2 .gallery-item:hover,
-    .gallery-grid-3 .gallery-item:hover {
-        transform: none !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 모바일에서도 갤러리 컨테이너 고정 높이 */
-    #facility-gallery-container {
-        min-height: 450px;
-    }
-
-    /* 모바일에서 갤러리 섹션 패딩 줄이기 - py-32를 py-8로 */
-    .gallery-section {
-        padding-top: 2rem !important; /* py-8 */
-        padding-bottom: 2rem !important; /* py-8 */
-    }
-
-    /* 모바일에서 시설 정보 섹션 하단 패딩 제거 */
-    .facility-info-section {
-        padding-bottom: 0 !important; /* pb-0 */
-    }
-
-    .slider-track-container {
-        max-width: 100%;
-        overflow: hidden;
-        height: 350px; /* 모바일 고정 높이 */
-    }
-
-    .slider-track {
-        gap: 0;
-    }
-
-    .slider-item {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .slider-item.active {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .slider-item.side {
-        flex: 0 0 100%;
-        height: 350px;
-        opacity: 1;
-    }
-
-    .gallery-slider {
-        padding: 0;
-    }
-
-    .slider-nav {
-        width: 40px;
-        height: 40px;
-    }
-
-    .slider-nav.prev {
-        left: 5px;
-    }
-
-    .slider-nav.next {
-        right: 5px;
-    }
-}
-
-/* Image Modal Styles */
-#image-modal {
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-}
-
-#image-modal.hidden {
-    display: none !important;
-}
-
-#image-modal.flex {
-    display: flex !important;
-}
-
-/* 모달 열림 시 body 스크롤 방지 */
-body.modal-open {
-    overflow: hidden !important;
-    position: fixed !important;
+/* ≤768 모바일: image-container2 내부 img2-group + img3-icon 세로 1열 스택 + 가운데 정렬 */
+@media screen and (max-width: 768px) {
+  /* 모바일: special-section 부터 페이지 하단까지 전체 100px 위로 이동 (웹은 영향 없음) */
+  .facility-page .special-section {
+    margin-top: -100px;
+  }
+  .facility-page .bg-parent2 .image-container2 {
+    overflow: visible;
+    margin: 40px auto 0;
+  }
+  .facility-page .bg-parent2 .image-container2 .img {
+    flex-direction: column !important;
+    align-items: center !important;
+    transform: none !important;
+    transform-origin: unset !important;
+    gap: 35px !important;       /* 25 → 35 (+10px) */
+  }
+  .facility-page .img2-group {
     width: 100% !important;
+    max-width: 350px !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 35px !important;          /* img2-icon ↔ img1-icon7 사이 35px */
+    position: relative !important;
+  }
+  .facility-page .img1-icon7,
+  .facility-page .img2-icon {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+  .facility-page .img1-icon7 {
+    aspect-ratio: 300 / 280;
+  }
+  .facility-page .img2-icon {
+    aspect-ratio: 350 / 400;
+  }
+  .facility-page .img3-icon {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: auto !important;
+    aspect-ratio: 450 / 600 !important;
+    padding-left: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+.facility-page .bg-parent2 .img {
+  width: 100%;
+  max-width: 100%;
+}
+/* 좌측 텍스트 영역(info-title, title7, bg6)이 우측 image-container2 폭만큼 영역 비워두도록 max-width 제한 */
+.facility-page .bg-parent2 .info-title,
+.facility-page .bg-parent2 .title7,
+.facility-page .bg-parent2 .bg6 {
+  max-width: 45%;
+}
+/* 좁은 화면(≤1100): image-container2 absolute 해제하고 자연 스택 */
+@media screen and (max-width: 1100px) {
+  .facility-page .bg-parent2 .image-container2 {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  .facility-page .bg-parent2 .info-title,
+  .facility-page .bg-parent2 .title7,
+  .facility-page .bg-parent2 .bg6 {
+    max-width: 100%;
+  }
+}
+/* bg-parent2-bg: top: -14px로 hero와 사이 여백 채움 +
+   z-index 낮춤 + .content z-index 높여서 겹친 부분에서는 hero가 위에 표시됨 */
+.facility-page .bg-parent2 .bg-parent2-bg {
+  position: absolute;
+  top: -14px;                   /* hero와의 사이 여백 채움 */
+  left: 0;
+  right: auto;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% + 14px);
+  max-width: 100%;
+  transform: none;
+  object-fit: contain;
+  object-position: left top;
+  z-index: 0;
+}
+/* bg-parent2 자체를 hero(content) 보다 아래 stacking */
+.facility-page .bg-parent2 {
+  z-index: 0;
+}
+.facility-page .content {
+  position: relative;
+  z-index: 2;
+}
+.facility-page .bg-parent2 .info-title {
+  display: flex;
+  align-items: flex-start;
+  flex-shrink: 0;
+  padding: 0 0 12px;
+  z-index: 1;
+}
+.facility-page .bg-parent2 .facility-info {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 56px);
+  font-family: var(--font-italiana);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 120%;
+  color: var(--Black);
+}
+.facility-page .bg-parent2 .title7 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  z-index: 2;
+  font-family: var(--font-ko-main);
+}
+.facility-page .bg-parent2 .h14 {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 700;
+  font-family: var(--font-ko-main);
+  letter-spacing: -0.01em;
+  line-height: 180%;
+  color: var(--Black);
+}
+.facility-page .bg-parent2 .h325 {
+  margin: 0;
+  font-size: clamp(15px, 1.3vw, 20px);
+  font-weight: 400;
+  font-family: var(--font-ko-sub);
+  letter-spacing: -0.01em;
+  line-height: 180%;
+  color: var(--Black);
 }
 
-/* 모달 이미지 스타일 */
-#modal-image {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
+/* bg6: 가로 라인 + 회색 박스 + 시설 이용안내 상세 */
+.facility-page .bg-parent2 .bg6 {
+  position: relative;
+  width: 100%;
+  max-width: 622px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 0 60px;
+  isolation: isolate;
+  gap: 30px;
+  box-sizing: border-box;
+  z-index: 1;
+  text-align: left;
+}
+/* bg-child2: bg-child3(회색 박스)의 정확히 최상단에 붙는 1px 검정 라인 */
+.facility-page .bg-parent2 .bg-child2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--Black);
+  flex-shrink: 0;
+  z-index: 2;
+}
+.facility-page .bg-parent2 .bg-child3 {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  z-index: 0;
+}
+.facility-page .bg-parent2 .info-details {
+  padding: 0 30px;
+  box-sizing: border-box;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  z-index: 2;
+}
+.facility-page .bg-parent2 .access-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  max-width: 100%;
+}
+.facility-page .bg-parent2 .frame-parent10 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.facility-page .bg-parent2 .ellipse-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+}
+.facility-page .bg-parent2 .frame-child7 {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--Black);
+}
+.facility-page .bg-parent2 .h326 {
+  margin: 0;
+  font-size: clamp(16px, 1.3vw, 20px);
+  font-family: var(--font-ko-main);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 120%;
+  color: var(--Black);
+}
+.facility-page .bg-parent2 .wrapper2 {
+  padding: 0 0 0 13px;
+}
+.facility-page .bg-parent2 .div22 {
+  font-size: clamp(13px, 1vw, 15px);
+  font-family: var(--font-ko-sub);
+  color: var(--Black);
+  letter-spacing: -0.01em;
+  line-height: 180%;
 }
 
-/* 모달 버튼은 HTML의 Tailwind 클래스 사용 (room.html과 동일) */
+@media screen and (max-width: 900px) {
+  .facility-page .bg-parent2 {
+    padding: 60px 20px 40px;
+  }
+  .facility-page .bg-parent2 .info-details {
+    padding: 0 16px;
+  }
+}
 
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media screen and (max-width: 900px) {
+  .facility-page .facility-inner {
+    padding: 60px 0;            /* 좌우 20 → 0 */
+  }
+  .facility-page .image-container-parent {
+    gap: 60px;
+  }
+  .facility-page .img {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+  .facility-page .img2-group {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .facility-page .specials-01,
+  .facility-page .specials-03,
+  .facility-page .specials-04,
+  .facility-page .specials-05 {
+    font-size: 28px;
+    width: auto;
+  }
+  .facility-page .img14,
+  .facility-page .img23,
+  .facility-page .img3,
+  .facility-page .img43,
+  .facility-page .img5 {
+    width: 280px;
+  }
 }

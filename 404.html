@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="페이지를 찾을 수 없습니다">
+    <title>404 - 페이지를 찾을 수 없습니다</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./styles/theme.css">
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/common.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./styles/footer.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana:wght@400&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap">
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #footer-placeholder {
+            margin-top: auto;
+        }
+
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 120px 20px 50px;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 900;
+            color: var(--color-secondary, #658399);
+            line-height: 1;
+            margin-bottom: 20px;
+            font-family: var(--font-italiana);
+        }
+
+        .error-title {
+            font-size: clamp(24px, 5vw, 40px);
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            font-family: var(--font-pretendard);
+        }
+
+        .error-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            max-width: 500px;
+            font-family: var(--font-pretendard);
+        }
+
+        .error-button {
+            display: inline-block;
+            padding: 14px 48px;
+            background: var(--color-secondary, #658399);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-pretendard);
+            font-size: 16px;
+        }
+
+        .error-button:hover {
+            background: #5a7185;
+            transform: translateY(-2px);
+        }
+
+        @media screen and (max-width: 768px) {
+            .error-container {
+                padding: 80px 20px 30px;
+            }
+
+            .error-code {
+                font-size: 70px;
+            }
+        }
+    </style>
+  <!-- Open Graph Meta Tags for Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="홍천 여유채" />
+  <meta property="og:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
+🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
+바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
+⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
+🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
+  <meta property="og:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-eynmwcssocf.jpg" />
+  <meta property="og:url" content="https://yeoyoochae.kr" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="홍천 여유채" />
+  <meta name="twitter:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
+🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
+바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
+⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
+🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
+  <meta name="twitter:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-eynmwcssocf.jpg" />
+</head>
+<body>
+    <div class="error-page">
+        <!-- Include Header -->
+        <div id="header-placeholder"></div>
+
+        <!-- Error Content -->
+        <main class="error-container">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">페이지를 찾을 수 없습니다</h2>
+            <p class="error-message">
+                요청하신 페이지가 존재하지 않거나 비활성화되었습니다.<br>
+                홈으로 돌아가기 버튼을 클릭해주세요.
+            </p>
+            <button class="error-button" onclick="window.location.href='./index.html'">
+                홈으로 돌아가기
+            </button>
+        </main>
+
+        <!-- Include Footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./js/common.js"></script>
+    <script src="./js/image-helpers.js"></script>
+    <script src="./js/data-mapper/core/base-mapper.js"></script>
+    <script src="./js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="./js/preview-handler.js"></script>
+    <script src="./js/header-footer-loader.js"></script>
+</body>
+</html>

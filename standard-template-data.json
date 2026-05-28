@@ -1,14 +1,15 @@
 {
   "metadata": {
-    "version": "1.15.0",
-    "generatedAt": "2026-05-28T06:09:06.523995727Z",
-    "templateType": "full_banner_slider",
+    "version": "1.16.0",
+    "generatedAt": "2026-05-28T06:10:06.560426273Z",
+    "templateType": "fullpage_mood",
     "propertyId": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "homepageId": "75621ba7-d9dc-4809-be82-1e159b8cb783"
   },
   "property": {
     "id": "90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7",
     "name": "홍천 여유채",
+    "nameEn": "Hongcheon yeoyoochae",
     "description": "자연 속 한 채, 당신을 위한 진짜 여유 [여유채]\n🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡\n바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.\n⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.\n🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!",
     "subtitle": "당신만을 위한 특별한 공간, 여유채",
     "address": "강원특별자치도 홍천군 서면 팔봉강변길 204",
@@ -23,6 +24,9 @@
     "reservationGuide": "미성년자는 보호자 없이 예약 및 입실 불가하며, 위반 시 환불 없이 퇴실됩니다.\n객실 요금은 기준 인원 기준이며, 초과 시 추가 요금이 발생합니다.\n최대 인원 초과 시 입실 불가하며, 이로 인한 환불은 불가입니다. (유아, 어린이 포함)\n현장 추가 요금은 숙소 측에 사전 확인 바랍니다.\n수영장 등 부대시설은 날씨나 상황에 따라 이용이 제한될 수 있으니 사전 확인 바랍니다.\n당일 예약 후 취소 시 환불 불가하며, 늦은 시간 당일 예약 후 즉시 방문 시 입실 불가할 수 있으니 숙소 확인 후 예약해 주세요.\n취소 수수료는 구매처마다 다를 수 있습니다.\n시스템 오류로 인해 정상가와 다른 금액으로 예약이 진행된 경우, 부득이하게 예약이 취소될 수 있습니다.\n전 객실 금연이며, 흡연은 지정된 장소에서만 가능합니다.",
     "province": "강원특별자치도",
     "city": "홍천군",
+    "domain": "yeoyoochae.kr",
+    "realtimeBookingId": "https://map.naver.com/p/entry/place/2081414566",
+    "ybsId": "78945",
     "amenities": [ ],
     "nearbyAttractions": [
       "산",
@@ -426,11 +430,7 @@
         "surrounding": [ ],
         "commonArea": [ ]
       }
-    ],
-    "nameEn": "Hongcheon yeoyoochae",
-    "domain": "yeoyoochae.kr",
-    "realtimeBookingId": "https://map.naver.com/p/entry/place/2081414566",
-    "ybsId": "78945"
+    ]
   },
   "rooms": [
     {
@@ -1236,6 +1236,7 @@
     }
   ],
   "homepage": {
+    "id": "75621ba7-d9dc-4809-be82-1e159b8cb783",
     "domain": "yeoyoochae.kr",
     "templateType": "fullpage_mood",
     "images": [
@@ -1617,37 +1618,11 @@
             }
           ]
         },
-        "layoutMap": {
-          "sections": [ ]
-        },
         "nearbyAttractions": {
           "sections": [ ]
-        }
-      },
-      "theme": {
-        "font": {
-          "koSub": {
-            "cdn": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css",
-            "key": "pretendard",
-            "woff2": null,
-            "family": "Pretendard"
-          },
-          "enMain": {
-            "cdn": "https://use.typekit.net/vll4umt.css",
-            "key": "amandine",
-            "woff2": null,
-            "family": "amandine"
-          },
-          "koMain": {
-            "cdn": "https://fonts.cdnfonts.com/css/noto-serif-kr",
-            "key": "notoserifKR",
-            "woff2": null,
-            "family": "Noto Serif KR"
-          }
         },
-        "color": {
-          "primary": "#e8e5e1",
-          "secondary": "#B8816B"
+        "layoutMap": {
+          "sections": [ ]
         }
       },
       "popup": {
@@ -1704,7 +1679,34 @@
           }
         ]
       },
+      "theme": {
+        "font": {
+          "koMain": {
+            "cdn": "https://fonts.cdnfonts.com/css/noto-serif-kr",
+            "key": "notoserifKR",
+            "woff2": null,
+            "family": "Noto Serif KR"
+          },
+          "koSub": {
+            "cdn": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css",
+            "key": "pretendard",
+            "woff2": null,
+            "family": "Pretendard"
+          },
+          "enMain": {
+            "cdn": "https://use.typekit.net/vll4umt.css",
+            "key": "amandine",
+            "woff2": null,
+            "family": "amandine"
+          }
+        },
+        "color": {
+          "primary": "#e8e5e1",
+          "secondary": "#B8816B"
+        }
+      },
       "property": {
+        "name": "홍천 여유채",
         "images": [
           {
             "id": "a5f5c02b-ffa8-49d3-a0f5-bf54550a2e89",
@@ -1851,7 +1853,6 @@
             "category": "property_exterior"
           }
         ],
-        "name": "홍천 여유채",
         "nameEn": "Yeoyoochae"
       },
       "roomtypes": [
@@ -2519,7 +2520,6 @@
           ]
         }
       ]
-    },
-    "id": "75621ba7-d9dc-4809-be82-1e159b8cb783"
+    }
   }
 }

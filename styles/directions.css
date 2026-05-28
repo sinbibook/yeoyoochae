@@ -1,96 +1,440 @@
-/* Directions Page Specific Styles */
+/* ===========================
+   Directions Page Styles (Figma export 기반)
+   - 헤더/푸터는 동적 로드 (header.css / footer.css 사용)
+   - 본 파일은 Direction 콘텐츠 영역(.direction, .content, .con-2, .location-info-wrapper, .con-5)만 담당
+   =========================== */
 
-/* 애니메이션 클래스들은 common.css로 이동됨 */
-
-/* Directions page specific styles */
-.directions-circular-image {
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-.directions-circular-image:hover {
-    transform: scale(1.05);
+.direction {
+  width: 100%;
+  position: relative;
+  background-color: var(--color-whitesmoke);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;             /* footer-container 등 자식이 풀 width로 늘어나도록 */
+  isolation: isolate;
+  line-height: normal;
+  letter-spacing: normal;
+}
+/* footer-container 명시적 풀 width 보장 */
+.direction #footer-container {
+  width: 100%;
+  align-self: stretch;
 }
 
-/* Directions page placeholder override for circular images */
-img.empty-image-placeholder.rounded-full {
-    border-radius: 50% !important;
-    border: 3px dashed #9ca3af !important;
+/* ===========================
+   1. HERO (Direction 타이틀 + 화살표) — main.html con-1과 동일 사이즈/반응형 + 슬라이더
+   =========================== */
+.direction .content {
+  align-self: stretch;
+  height: auto;
+  min-height: clamp(600px, 60vw, 1082px);  /* main.html con-1-wrapper와 동일 반응형 */
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: 66px;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
+  display: flex;
+  align-items: flex-start;
+}
+/* 모바일(≤768px)에서만 hero 세로 viewport 60vh로 단축 — direction/room/facility/reservation 공통
+   부모/자식 모든 hero 컨테이너에 강제 적용해서 .bg2 padding이 부풀리는 것 방지 */
+@media screen and (max-width: 768px) {
+  .direction .content,
+  .direction .con-2,
+  .direction .bg2 {
+    height: 60vh !important;
+    min-height: 60vh !important;
+    max-height: 60vh !important;
+    box-sizing: border-box !important;
+  }
+  /* bg2 padding 축소 — content가 60vh 안에 자연스럽게 정렬되도록 */
+  .direction .bg2 {
+    padding-top: 0 !important;
+    padding-bottom: 20px !important;
+    overflow: hidden !important;
+  }
 }
 
-img.empty-image-placeholder.rounded-full::before {
-    border-radius: 50% !important;
+.direction .con-2 {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--color-white);
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
 }
 
-img.empty-image-placeholder.rounded-full::after {
-    /* 아이콘 표시용이므로 border-radius 불필요 */
+/* bg2: 슬라이더 컨테이너 (background-image 제거하고 .bg-slides로 크로스페이드) */
+.direction .bg2 {
+  position: relative;
+  align-self: stretch;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 53px;
+  background-image: none;          /* 단일 bg 제거 → bg-slides 사용 */
+  max-width: 100%;
+  box-sizing: border-box;
+  align-items: flex-start;
+  overflow: hidden;
 }
 
-/* Info cards hover effects */
-.info-card {
-    transition: all 0.3s ease;
+/* 슬라이더 layer (absolute, behind bg-child) */
+.direction .bg-slides {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.direction .bg-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-elegant) !important;
+}
+.direction .bg-slide.is-active {
+  opacity: 1;
+}
+/* bg-child(텍스트/화살표)는 슬라이드 위로 */
+.direction .bg-child {
+  position: relative;
+  z-index: 1;
+}
+/* 화살표 클릭 활성화 */
+.direction .arrow-child2[role="button"],
+.direction .arrow-child4[role="button"] {
+  cursor: pointer;
+  pointer-events: auto;
 }
 
-.info-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+.direction .bg-child {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 20px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-/* 이미지 영역 애니메이션 효과 */
-.floating-circle {
-    animation: floatingCircle 4s ease-in-out infinite;
+.direction .address-container-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 40px;
+  max-width: 100%;
 }
 
-@keyframes floatingCircle {
-    0%, 100% {
-        transform: translateY(0px) scale(1);
-    }
-    50% {
-        transform: translateY(-15px) scale(1.05);
-    }
+.direction .address-container {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 1px;
+  gap: 25px;
 }
 
-.hover-scale {
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.direction .direction-info {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 54px 0 57px;
 }
 
-.hover-scale:hover {
-    transform: scale(1.05) rotate(2deg);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+.direction .direction2 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: 0.03em;
+  line-height: 100%;
+  font-weight: 400;
+  font-family: inherit;
+  text-shadow: var(--text-shadow-1, 0px 0px 4px rgba(0, 0, 0, 0.15));
+  z-index: 1;
 }
 
-/* 페이지 로드 시 이미지 영역 전체 애니메이션 */
-.fade-in-scale.animate .floating-circle {
-    animation-delay: 0.5s;
+.direction .direction-divider {
+  align-self: stretch;
+  height: 1px;
+  position: relative;
+  border-top: 1px solid var(--color-white);
+  box-sizing: border-box;
+  z-index: 1;
 }
 
-/* 안내사항 섹션 스타일 */
-.directions-notice-section {
-    border-color: var(--brand-color-primary);
+.direction .arrow-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 18px 0 19px;
+  box-sizing: border-box;
+  max-width: 100%;
+  font-size: 20px;
 }
 
-.directions-notice-icon {
-    color: var(--brand-color-primary);
+.direction .arrow2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: var(--color-white);
+  font-family: var(--font-italiana);
 }
 
-.directions-notice-title {
-    color: var(--brand-color-primary);
+.direction .arrow-child2 {
+  height: 10px;
+  width: 100px;
+  position: relative;
+  cursor: pointer;
 }
 
-.directions-notice-description {
-    color: var(--brand-color-primary);
+.direction .h36 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: -0.01em;
+  line-height: 36px;
+  font-weight: 400;
+  font-family: inherit;
 }
 
-/* 모바일에서 empty-image-placeholder min-height 제거 */
-@media (max-width: 768px) {
-    img.empty-image-placeholder {
-        min-height: auto !important;
-    }
+.direction .arrow-child3 {
+  height: 11px;
+  width: 1px;
+  position: relative;
+  border-right: 1px solid var(--color-white);
+  box-sizing: border-box;
 }
 
-/* 카카오맵 컨테이너 스타일 */
+.direction .arrow-child4 {
+  height: 10px;
+  width: 100px;
+  position: relative;
+  object-fit: contain;
+  transform: scaleX(-1);
+  cursor: pointer;
+}
+
+/* ===========================
+   2. LOCATION INFO (주소 + 카카오맵)
+   =========================== */
+.direction .location-info-wrapper {
+  align-self: stretch;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 112px 20px 144px;     /* 상단 여백 112px 복원 */
+  box-sizing: border-box;
+  text-align: left;
+  font-size: 56px;
+  color: var(--Black);
+  font-family: var(--font-italiana);
+}
+
+.direction .location-info {
+  width: 1500px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.direction .details-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+  max-width: 100%;
+}
+
+.direction .direction3 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: 0.03em;
+  line-height: 120%;
+  font-weight: 400;
+  font-family: inherit;
+  z-index: 1;
+}
+
+.direction .address-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px 0 0;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  font-size: 20px;
+  font-family: var(--font-ko-sub);
+}
+
+.direction .h38 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  letter-spacing: -0.01em;
+  line-height: 180%;
+  font-weight: 400;
+  font-family: inherit;
+  color: var(--Black);
+  z-index: 1;
+}
+
+.direction .map-container {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;        /* 어떤 화면에서도 가로 가운데 정렬 */
+  max-width: 100%;
+  text-align: center;
+  font-size: var(--fs-64, 64px);
+  color: var(--color-white);
+  font-family: var(--font-abhaya-libre-extrabold, "Abhaya Libre ExtraBold");
+}
+
+.direction .img1 {
+  background-color: var(--color-black);
+  overflow: hidden;
+  padding: 343px 554px 342px 555px;
+  box-sizing: border-box;
+  z-index: 1;
+  max-width: 100%;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
 #kakao-map {
+  position: absolute;
+  inset: 0;
+}
+
+/* ===========================
+   3. QUOTE 섹션은 quote-section.css 사용 (main.html과 동일)
+   .direction .quote-section은 별도 스타일 불필요
+   =========================== */
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media screen and (max-width: 1200px) {
+  .direction .location-info-wrapper {
+    padding-bottom: 94px;
+  }
+  .direction .img1 {
+    padding-left: 277px;
+    padding-right: 277px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  /* .content padding-bottom 제거 — 모든 페이지(direction/room/facility/reservation)에서
+     hero 높이를 min-height clamp(600, 60vw, 1082px) 단일 값으로 통일 */
+  .direction .content {
+    padding-bottom: 0;
+  }
+  .direction .bg2 {
+    padding-bottom: 34px;
+  }
+  .direction .direction2 {
+    font-size: 53px;
+    line-height: 53px;
+  }
+  .direction .direction3 {
+    font-size: 45px;
+    line-height: 54px;
+  }
+  .direction .img1 {
+    padding-top: 223px;
+    padding-bottom: 222px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  /* .content padding-bottom 제거 — 모든 페이지에서 hero 높이 통일 */
+  .direction .content {
+    padding-bottom: 0;
+  }
+  .direction .location-info-wrapper {
+    padding-bottom: 61px;
+  }
+  .direction .details-container {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .direction .img1 {
+    padding-left: 138px;
+    padding-right: 138px;
+  }
+  /* 모바일에서 Direction 타이틀 가운데 정렬 */
+  .direction .address-container-parent {
+    align-items: center !important;
+  }
+  .direction .address-container {
+    align-items: center !important;
+  }
+  .direction .direction-info {
+    justify-content: center !important;
     width: 100%;
-    height: 100%;
+    box-sizing: border-box;
+  }
+  .direction .direction2 {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .direction .bg2 {
+    padding-bottom: 22px;
+  }
+  .direction .address-container-parent {
+    gap: 20px;
+    align-items: center !important;        /* 모바일에서 가운데 정렬 */
+  }
+  .direction .address-container {
+    align-items: center !important;
+  }
+  .direction .direction-info {
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: center !important;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .direction .direction2 {
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+  }
+  .direction .direction3 {
+    font-size: 34px;
+    line-height: 40px;
+  }
+  .direction .h38 {
+    font-size: 16px;
+    line-height: 29px;
+  }
+  .direction .img1 {
+    padding: 145px 20px 144px;
+  }
 }

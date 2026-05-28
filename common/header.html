@@ -1,59 +1,79 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header Component</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="../styles/header.css"/>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- Open Graph Meta Tags for Social Media -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="홍천 여유채" />
-  <meta property="og:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
-🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
-바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
-⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
-🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
-  <meta property="og:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-ho1ea5yfuw.jpg" />
-  <meta property="og:url" content="https://yeoyoochae.kr" />
+<header class="header">
+    <a href="./index.html" class="logo-link" aria-label="홈으로">
+      <img
+        class="logo"
+        data-logo
+        loading="lazy"
+        alt=""
+        src=""
+      />
+    </a>
+    <nav class="header-nav">
+      <div class="header-reserve-btns">
+        <a href="#" class="btn-reservation btn-salmon" data-booking-engine>예약</a>
+        <a href="#" class="btn-reservation btn-gray" data-ybs-booking>YBS</a>
+      </div>
+      <button class="menu-toggle" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
 
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="홍천 여유채" />
-  <meta name="twitter:description" content="자연 속 한 채, 당신을 위한 진짜 여유 [여유채]
-🌿 자연과 함께하는 여유로운 쉼표, 여유채 🏡
-바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
-⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
-🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
-  <meta name="twitter:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-ho1ea5yfuw.jpg" />
-</head>
-<body>
-    <header id="main-header" class="fixed top-0 left-0 right-0 w-full bg-transparent border-0 z-40 transition-all duration-300">
-        <div class="flex items-center justify-between p-6 md:p-8">
-            <!-- Brand Logo -->
-            <div class="brand-logo">
-                <button id="pension-logo" class="hover:opacity-80 transition-opacity flex items-center gap-3">
-                    <div>
-                        <div class="logo-text hero-logo-text text-white text-xl md:text-2xl lg:text-3xl ko-title" data-property-name></div>
-                    </div>
-                </button>
-            </div>
+  <!-- ===================== Navigation Panel (메뉴 토글 클릭 시 표시) ===================== -->
+  <div class="navigation" hidden aria-hidden="true">
+    <main class="navigation-off">
+      <img class="navigation-off-child" loading="lazy" alt="" src="./public/Rectangle-34@2x.png" />
+      <img class="navigation-off-item" alt="" src="./public/Line-4.svg" />
+      <main class="navigation-off-inner">
+        <div class="mask-group-parent">
+          <img class="mask-group-icon" alt="" src="./public/Mask-group@2x.png" />
 
-            <!-- Menu Button -->
-            <button id="hamburger-menu" 
-                    class="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                    aria-label="메뉴">
-                <div class="w-6 h-6 flex flex-col justify-center items-center space-y-1">
-                    <div id="line1" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
-                    <div id="line2" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
-                    <div id="line3" class="w-5 h-0.5 bg-white drop-shadow-lg transition-all duration-300"></div>
-                </div>
+          <div class="btn-r">
+            <button class="button-reservation" data-booking-engine>
+              <div class="button-reservation-child"></div>
+              <div class="div">예약</div>
             </button>
-        </div>
-    </header>
+            <button class="button-ybs" data-ybs-booking>
+              <div class="button-ybs-child"></div>
+              <div class="div">YBS</div>
+            </button>
+            <svg class="close-icon" role="button" tabindex="0" aria-label="닫기" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="23.2929" y1="23.7071" x2="1.37258" y2="1.7868" stroke="currentColor" stroke-width="2"/>
+              <line x1="1.29289" y1="23.2929" x2="23.2132" y2="1.37258" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
 
-    <div id="fullscreen-menu-container"></div>
-</body>
-</html>
+          <section class="room-parent">
+            <div class="prologue">
+              <!-- 하드코딩, 매핑x -->
+              <a class="reservation" href="./main.html">Prologue</a>
+              <a class="reservation" href="./directions.html"><div class="div2">오시는길</div></a>
+              <!-- 주변 관광지 / 숙소 배치도: enabled 시 header-footer-mapper.js가 동적 추가 -->
+            </div>
+            <div class="room" data-rooms-sub>
+              <!-- 동적 생성 (header-footer-mapper.js) -->
+            </div>
+            <div class="special" data-facilities-sub>
+              <!-- 동적 생성 (header-footer-mapper.js) -->
+            </div>
+            <div class="txt">
+              <!-- 하드코딩, 매핑x -->
+              <a class="reservation" href="./reservation.html">Reservation</a>
+            </div>
+          </section>
+
+          <nav class="title">
+            <!-- 하드코딩, 매핑x -->
+            <a class="specials" href="./main.html">Prologue</a>
+            <a class="specials" href="./room.html">Rooms</a>
+            <a class="specials" href="./facility.html">Specials</a>
+            <a class="specials" href="./reservation.html">Reservation</a>
+          </nav>
+        </div>
+      </main>
+    </main>
+  </div>
+
+  <script src="./js/common/header-menu.js"></script>

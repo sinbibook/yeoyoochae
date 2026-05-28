@@ -3,18 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-homepage-seo-title></title>
-    <meta name="description" content="" data-homepage-seo-description>
-    <meta name="keywords" content="" data-homepage-seo-keywords>
-    <link rel="icon" type="image/png" href="" data-homepage-favicon>
+    <title></title>
 
-    <script src="js/config.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="styles/theme.css"/>
-    <link rel="stylesheet" href="styles/common.css"/>
-    <link rel="stylesheet" href="styles/index.css"/>
-    <link rel="stylesheet" href="styles/popup.css"/>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/theme.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/footer.css">
+    <link rel="stylesheet" href="styles/slider-arrows.css">
+    <link rel="stylesheet" href="styles/quote-section.css">
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="styles/global.css">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Italiana:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:wght@700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@500&display=swap"
+    />
   <!-- Open Graph Meta Tags for Social Media -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="홍천 여유채 - 홈" />
@@ -23,7 +51,7 @@
 바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
 ⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
 🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
-  <meta property="og:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-ho1ea5yfuw.jpg" />
+  <meta property="og:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-eynmwcssocf.jpg" />
   <meta property="og:url" content="https://yeoyoochae.kr" />
 
   <!-- Twitter Card Meta Tags -->
@@ -34,111 +62,165 @@
 바쁜 일상 속, 잠시 멈춰 숨을 고를 수 있는 곳. 여유채는 단순한 숙소가 아닌, 당신의 삶에 진짜 '쉼'을 선물하는 공간입니다.
 ⛰ 탁 트인 하늘과 고요한 산, 흐르는 강줄기 홍천의 자연 속 프라이빗 독채에서 누구의 방해도 없는 온전한 휴식을 경험하세요.
 🍖 개별 바베큐로 즐기는 저녁 시간 🛁 프라이빗 자쿠지에서 완성되는 힐링 타임 👨‍👩‍👧‍👦 가족, 연인, 소모임 모두에게 안성맞춤!" />
-  <meta name="twitter:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-ho1ea5yfuw.jpg" />
+  <meta name="twitter:image" content="https://jlnjajtcnyqupfaqjerz.supabase.co/storage/v1/object/public/app-images/property/90d8ebbd-38c5-449f-a4b8-ee9cbdc1fec7/thumbnail/1764318787492-eynmwcssocf.jpg" />
 </head>
 <body>
+    <div class="page">
+      <!-- header.html include -->
+      <div id="header-container"></div>
+      <!-- ===================== 1. HERO ===================== -->
+      <section class="hero">
+        <!-- HOMEPAGE Property : 숙소명 매핑 -->
+        <div class="hero-title" data-hero-property-name>
+          <h1 class="hero-title-text"></h1>
+        </div>
+        <!-- ===================== 2. GALLERY ===================== -->
+        <div class="gallery-section" data-gallery>
+        <!-- CUSTOM FIELD : 홈 갤러리 섹션 이미지 매핑 -->
+          <div class="gallery-track" data-gallery-image>
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+        </div>
 
-    <div id="fullscreen-menu-container"></div>
-
-    <div class="w-full min-h-screen overflow-x-hidden" data-name="랜딩페이지">
-        <!-- Hero Section -->
-        <section id="section1" class="relative w-full overflow-hidden" style="height: 100vh; height: 100dvh; min-height: 100vh; min-height: 100dvh;">
-            <!-- Hero Swiper Container -->
-            <div id="hero-swiper" class="swiper hero-swiper absolute inset-0 w-full h-full">
-                <div class="swiper-wrapper" data-homepage-customFields-pages-index-sections-0-hero-images>
-                </div>
-
-                <!-- Swiper 컨트롤들 -->
-                <div class="swiper-pagination"></div>
-                <div class="swiper-scrollbar"></div>
+        <!-- ===================== 3. CON-2: SLIDER ===================== -->
+        <div class="slider-section" data-hero-section>
+          <!-- CUSTOM FIELD : 홈 메인 소개 섹션 이미지 매핑 -->
+          <div class="slider-bg-wrap" data-hero-images>
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+          <div class="slider-content">
+            <!-- CUSTOM FIELD : 홈 메인 소개 섹션 설명 매핑 -->
+            <div class="slider-heading" data-hero-description></div>
+            <div class="slider-bottom">
+              <!-- CUSTOM FIELD : 홈 메인 소개 섹션 타이틀 매핑 -->
+              <h3 class="slider-subtitle" data-hero-title></h3>
+              <div class="slider-arrows">
+                <img class="arrow-line" loading="lazy" alt="" src="./images/Rectangle-37.svg" />
+                <h3 class="arrow-num">01</h3>
+                <div class="arrow-divider"></div>
+                <h3 class="arrow-num">00</h3>
+                <img class="arrow-line arrow-line-flip" loading="lazy" alt="" src="./images/Rectangle-37.svg" />
+              </div>
             </div>
+          </div>
+        </section>
+      </div>
 
-            <!-- 오버레이 -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+      <!-- ===================== 4. CON-3: PROLOGUE ===================== -->
+      <section class="prologue-section" data-essence-section>
+        <img class="prologue-bg" alt="" src="./images/bg6@2x.png" />
+        <div class="prologue-inner">
+          <div class="prologue-text">
+            <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 섹션 설명 매핑  -->
+            <div class="prologue-heading" data-essence-description></div>
+            <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 타이틀 매핑 -->
+            <div class="prologue-desc" data-essence-title></div>
+          </div>
+          <div class="prologue-divider"></div>
+        </div>
+        <!-- CUSTOM FIELD : 홈 메인 핵심 메시지 이미지 매핑, 이미지는 총 3개 고정 롤링 -->
+        <div class="prologue-main-wrap" data-essence-images>
+          <!-- 동적 생성 (index-mapper.js) -->
+        </div>
+        <div class="prologue-thumbs">
+          <!-- 동적 생성 (index-mapper.js) -->
+        </div>
+      </section>
 
-            <div class="absolute inset-0 flex flex-col justify-center items-start text-left z-20 pt-16 pl-6 md:pt-20 md:pl-16 lg:pl-20">
-                <div class="relative z-30 max-w-4xl px-4 md:px-6 hero-text">
-                    <h1 class="text-3xl md:text-4xl lg:text-5xl text-white mb-4 md:mb-6 ko-title hero-title-animation text-left">
-                        <p class="block hero-title ko-title hero-title-1" data-property-name></p>
-                    </h1>
-                    <p class="text-sm md:text-md text-white/90 mb-4 md:mb-6 hero-description ko-body font-light leading-relaxed hero-description-animation text-left" data-homepage-customFields-pages-index-sections-0-hero-description>
-                    </p>
+      <!-- ===================== 5. ROOMVIEW ===================== -->
+       <!-- room preview section : 커스텀 영역 x / 룸 정보 매핑 -->
+      <section class="roomview-section" data-room-section>
+        <!-- 하드코딩, 매핑 x -->
+        <b class="roomview-title">Roomview</b>
+        <div class="room-slider">
+          <div class="room-slider-track">
+            <!-- 동적 생성 (index-mapper.js) -->
+          </div>
+        </div>
+      </section>
 
-                    <div class="hero-controls hero-controls-animation">
-                        <div class="swiper-button-prev"></div>
-                        <div class="hero-progress-bar">
-                            <div class="hero-progress"></div>
-                        </div>
-                        <div class="swiper-button-next"></div>
+      <!-- ===================== 6. SPECIAL OFFERS ===================== -->
+       <!-- facility section : 커스텀 영역 x / 부대시설 정보 매핑 -->
+      <section class="special-section" data-facility-section>
+        <img class="special-bg-img" alt="" src="./images/bg5@2x.png" />
+        <div class="special-content">
+          <!-- 하드코딩, 매핑x -->
+          <b class="special-offers-label">Special offers</b>
+          <!-- 컨텐츠 레이어 (문구 위에 겹침) -->
+          <div class="special-overlay">
+            <div class="special-left">
+              <div class="specials-card-img-wrap">
+                <div class="specials-card-img-border"></div>
+                <!-- 동적 생성 (index-mapper.js) -->
+              </div>
+            </div>
+            <div class="special-text-group">
+              <!-- 하드코딩, 매핑x -->
+              <b class="special-here-label">Special<br /> here</b>
+              <div class="special-right">
+                <div class="special-image">
+                  <!-- 동적 생성 (index-mapper.js) -->
+                  <div class="slide">
+                    <div class="slide-dots">
+                      <img class="dot-icon" loading="lazy" alt="" src="./images/Empty-Set1.svg" />
+                      <img class="dot-icon dot-icon-flip" loading="lazy" alt="" src="./images/Empty-Set1.svg" />
                     </div>
+                    <div class="bar-icon" aria-hidden="true"><div class="bar-fill"></div></div>
+                  </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="flex items-center justify-center pt-16">
-            <div class="text-center mb-16">
-                <h3 class="text-3xl md:text-3xl font-bold ko-title en-title fade-in-up" style="color: var(--color-secondary);" data-homepage-customFields-pages-index-sections-0-essence-title>
-                </h3>
-                <div class="w-full h-px mt-6 fade-in-up" style="background-color: var(--color-secondary);"></div>
-                <p class="text-lg text-gray-600 ko-body mt-6 fade-in-up" data-homepage-customFields-pages-index-sections-0-essence-description>
-                </p>
-            </div>
-        </section>
-
-        <!-- Signature Section -->
-        <section class="about-section">
-            <div data-homepage-customFields-pages-index-sections-signature-items>
-            </div>
-        </section>
-
-        <!-- Closing Section -->
-        <section class="wave-bg-section relative overflow-hidden">
-            <div class="wave-bg relative w-full">
-                <svg width="0" height="0" style="position: absolute;">
-                    <defs>
-                        <clipPath id="wave-clip" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.08 Q0.25,0.02 0.5,0.08 T1,0.08 L1,1 L0,1 Z"/>
-                        </clipPath>
-                        <clipPath id="wave-clip-mobile" clipPathUnits="objectBoundingBox">
-                            <path d="M0,0.12 Q0.25,0.06 0.5,0.12 T1,0.12 L1,1 L0,1 Z"/>
-                        </clipPath>
-                    </defs>
-                </svg>
-
-                <div class="absolute inset-0 bg-cover bg-center bg-no-repeat bg-fixed empty-image-placeholder"
-                     style="background-image: url(''); background-attachment: fixed; clip-path: url(#wave-clip);"
-                     data-index-wave-background>
-
-                    <div class="absolute inset-0"></div>
-
-                    <div class="absolute inset-0 z-10 flex items-center justify-center px-6">
-                        <div class="banner-content text-center text-white max-w-3xl md:pt-20">
-                            <div class="animated-text">
-                                <h1 class="banner-title font-bold mb-8 fade-in-up ko-title en-title" data-homepage-customFields-pages-index-sections-0-closing-title>
-                                </h1>
-                                <p class="banner-description font-light leading-relaxed fade-in-up ko-body" data-homepage-customFields-pages-index-sections-0-closing-description>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <!-- 슬라이드 인덱스에 맞춰 JS가 textContent와 href를 교체 -->
+                <h3 class="specials-card-title" data-titles=""></h3>
+                <div class="specials-card-body">
+                  <div class="specials-card-desc" data-descs=""></div>
+                  <a href="#" class="view-more-link view-more-link-sm" data-links="">
+                    <h3 class="view-more-text">View More</h3>
+                    <img class="view-more-line" loading="lazy" alt="" src="./images/Rectangle-8.svg" />
+                  </a>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 8. QUOTE (CON-5) ===================== -->
+      <section class="quote-section" data-closing-section>
+        <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 이미지 매핑 -->
+        <img class="quote-bg" loading="lazy" alt="" src="" />
+        <div class="quote-content">
+          <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 타이틀 매핑 -->
+          <b class="quote-title" data-closing-title></b>
+          <!-- CUSTOM FIELD : 홈 메인 마무리 섹션 설명 매핑 -->
+          <b class="quote-body" data-closing-description></b>
+        </div>
+      </section>
+
+      <!-- ===================== 9. FOOTER ===================== -->
+      <!-- footer.html include -->
+      <div id="footer-container"></div>
 
     </div>
 
-    <!-- Popup System -->
+
+    <!-- Popup -->
     <div id="popup-container"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="js/image-helpers.js"></script>
-    <script src="js/header-footer-loader.js"></script>
-    <script src="js/data-mapper/core/base-mapper.js"></script>
-    <script src="js/data-mapper/pages/index-mapper.js"></script>
-    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
-    <script src="js/preview-handler.js"></script>
-    <script src="js/common/scroll-animation.js"></script>
+    <!-- Scripts -->
+    <script src="js/common.js"></script>
+    <script src="js/common/scroll-reveal.js"></script>
     <script src="js/pages/index.js"></script>
+
+    <!-- Data Mapper -->
+    <script src="js/image-helpers.js"></script>
+    <script src="js/data-mapper/core/base-mapper.js"></script>
+    <script src="js/data-mapper/pages/header-footer-mapper.js"></script>
+    <script src="js/data-mapper/pages/index-mapper.js"></script>
+    <script src="js/preview-handler.js"></script>
+
+    <!-- Header / Footer Loader (header.html 로드 → 내부 스크립트 추출 실행 → HeaderFooterMapper 초기화) -->
+    <script src="js/header-footer-loader.js"></script>
+
+    <!-- Popup -->
     <script src="js/popup.js"></script>
 </body>
 </html>
